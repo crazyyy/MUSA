@@ -13,7 +13,7 @@
 body {
   font-family: $font-family-base;
   font-size: $base-font-size;
-  font-weight: $fnorm;
+  font-weight: 300;
   line-height: $base-line-height;
   min-width: 320px;
   transition: $base-transition;
@@ -73,17 +73,7 @@ picture {
 }
 .container {
   position: relative;
-  max-width: $width;
-}
-
-header {
-  background-color: $gray-light;
-  .header--logo {
-    display: block;
-    img {
-      max-width: 100%;
-    }
-  }
+  // max-width: $width;
 }
 nav {
   ul {
@@ -94,6 +84,233 @@ nav {
   }
 }
 
+.header--logo {
+  text-align-last: left;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  a {
+    text-decoration: none;
+  }
+  img {
+    max-width: 100%;
+  }
+}
+
+.header--phone {
+  @extend .flex-center;
+  padding-left: 0;
+  padding-right: 0;
+  a {
+    font-size: 18px;
+    color: #262028;
+    line-height: 1.11;
+    text-decoration: none;
+    &:before {
+      width: 20px;
+      height: 20px;
+      background-image: url(../img/ico-phone.png#spriteimage);
+      display: inline-block;
+      margin-right: 10px;
+      position: relative;
+      top: 3px;
+      content: '';
+    }
+    span {
+      font-weight: 700;
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.header--social {
+  padding-left: 0;
+  padding-right: 0;
+  @extend .flex-center;
+  a {
+    font-size: 0;
+    width: 22px;
+    height: 22px;
+    margin: 0 5px;
+    display: inline-block;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+    &:first-child{
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  .header--social__whatsapp {
+    background-image: url(../img/ico-whatsapp.png#spriteimage);
+    &:hover {
+      background-image: url(../img/ico-hover-whatsapp.png#spriteimage);
+    }
+  }
+  .header--social__viber {
+    background-image: url(../img/ico-viber.png#spriteimage);
+    height: 24px;
+    &:hover {
+      background-image: url(../img/ico-hover-viber.png#spriteimage);
+    }
+  }
+  .header--social__skype {
+    background-image: url(../img/ico-skype.png#spriteimage);
+    width: 23px;
+    &:hover {
+      background-image: url(../img/ico-hover-skype.png#spriteimage);
+    }
+  }
+  .header--social__messenger {
+    background-image: url(../img/ico-messenger.png#spriteimage);
+    &:hover {
+      background-image: url(../img/ico-hover-messenger.png#spriteimage);
+    }
+  }
+  .header--social__facebook {
+    background-image: url(../img/ico-facebook.png#spriteimage);
+    width: 11px;
+    height: 20px;
+    &:hover {
+      background-image: url(../img/ico-hover-facebook.png#spriteimage);
+    }
+  }
+  .header--social__instagram {
+    background-image: url(../img/ico-instagram.png#spriteimage);
+    &:hover {
+      background-image: url(../img/ico-hover-instagram.png#spriteimage);
+    }
+  }
+}
+
+
+.header--lang {
+  form {
+    user-select: none;
+    background: #ffffff;
+    overflow: hidden;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
+    transition: box-shadow 0.2s;
+    &:focus, &:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    &:after {
+      content: '▾';
+      position: absolute;
+      top: 0;
+      right: 12px;
+      z-index: 1;
+      color: #bbbbbb;
+      line-height: 40px;
+      font-size: 14px;
+    }
+  }
+  .ie form:after {
+    display: none;
+  }
+
+  select {
+    position: relative;
+    background: transparent;
+    background-image: none;
+    display: block;
+    width: 100%;
+    outline: none;
+    color: #888888;
+    cursor: pointer;
+    z-index: 2;
+    border: none;
+    padding: 10px 10px 10px 5px;
+    text-overflow: '';
+    text-indent: 5px;
+    appearance: none;
+  }
+  select[multiple=multiple] {
+    height: auto;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
+    transition: box-shadow 0.2s;
+  }
+  select[multiple=multiple]:hover {
+    border-color: #cccccc;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  select option[disabled] {
+    color: #eeeeee;
+    text-shadow: none;
+    border: none;
+  }
+
+  select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #888888;
+  }
+
+  select::-ms-expand {
+    display: none;
+  }
+
+
+}
+
+.header--button {
+
+  .header--button__admission {
+
+  }
+}
+.header--dark {
+  background-color: $blue-light;
+  background-color: #f4f4f4ff;
+}
+.header--nav {
+  li {
+    a {
+      font-weight: 300;
+      line-height: 1.25;
+      color: #262028;
+      padding: 22px 15px 19px;
+      @extend .flex-center;
+      border-bottom: 3px solid transparent;
+    }
+    &.menu-active,
+    &:hover {
+      a{
+        color: #607d8bff;
+        border-bottom: 3px solid #607d8bff;
+      }
+    }
+  }
+}
+
+.header--search {
+  @extend .flex-center;
+	form {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  input {
+    margin: 0;
+    height: 40px;
+    width: 100%;
+    background-color: #ffffffff;
+    background-image: url(../img/ico-search.png);
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    padding-left: 50px;
+    font-size: 15px;
+    color: $black;
+  }
+}
+
+
 section {
   padding: 0;
 }
@@ -103,17 +320,24 @@ article {
 .looper {
   @extend .clearfix;
 }
-
 footer {
   height: $footer;
   margin: auto 0;
   background-color: $gray-light;
 }
 
-
 @import "media";
 
-// @import "fonts/font_roboto";
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+
+
+@import "fonts/font_algerian";
+@import "fonts/font_monotype";
+@import "fonts/font_ubuntu";
 
 @import "import/base64";
 @import "import/print";

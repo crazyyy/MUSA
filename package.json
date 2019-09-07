@@ -69,14 +69,18 @@
     "@babel/core": "^7.5.5",
     "@babel/parser": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@types/jquery": "^3.3.31",
     "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "babel-cli": "^6.26.0",
     "browser-sync": "^2.26.7",
     "css-mqpacker": "^7.0.0",
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
+    "jquery": "^3.4.1",
+    "typescript": "^3.6.2"
   },
   "devDependencies": {
     "css-mqpacker": "^7.0.0",

@@ -269,8 +269,8 @@ gulp.task('fonts', function() {
 });
 
 
-var jsConcat = lazypipe()
-  .pipe(plugins.concat, 'scripts.js', {newLine: '\n;'})
+// var jsConcat = lazypipe()
+  // .pipe(plugins.concat, [config.path.scripts.dir + 'scripts.js', {newLine: '\n;'}, config.path.scripts.dir + 'app.js'])
 
 // Optimize script
 gulp.task('scripts', function() {
@@ -282,7 +282,7 @@ gulp.task('scripts', function() {
     .pipe(plugins.babel({
 			presets: ['env']
 		}))
-    .pipe(plugins.if(['scripts.js' /*,'scripts2.js'*/], jsConcat()))
+    // .pipe(plugins.if(['scripts.js', 'app.js'], jsConcat()))
     .pipe(plugins.if('*.js', plugins.uglify()))
     .pipe(plugins.if(!env_prod, plugins.sourcemaps.write('maps', {includeContent: true})))
     .pipe(gulp.dest(config.path.scripts.dest))
@@ -292,6 +292,21 @@ gulp.task('scripts', function() {
       title: 'task:scripts:'
     }))
     .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('typescript', function () {
+  return gulp.src(config.path.scripts.ts)
+    .pipe(customPlumber('Error Running Typescript'))
+      .pipe(plugins.typescript({
+        noImplicitAny: true,
+      }))
+      .pipe(gulp.dest(config.path.scripts.src))
+      .pipe(plugins.filter('**/*.js'))
+      .pipe(plugins.size({
+        showFiles: true,
+        title: 'task:scripts:'
+      }))
+      .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('task:images', gulp.series('image:default', 'image:sprite', 'image:image2webp'));

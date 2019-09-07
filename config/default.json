@@ -26,6 +26,8 @@
     },
     "scripts": {
       "src": "assets/js/**",
+      "dir": "assets/js/",
+      "ts": "assets/typescript/**.ts",
       "dest": "./html/js/"
     }
   }
