@@ -45,3 +45,11 @@ if (typeof jQuery === "undefined") {
   console.log("jQuery " + jQuery.fn.jquery + " has loaded")
 }
 // Place any jQuery/helper plugins in here.
+
+(function(){
+  $('.header--lang select').selectric({
+    optionsItemBuilder: function(itemData, element, index) {
+      return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
+    }
+  });
+})()

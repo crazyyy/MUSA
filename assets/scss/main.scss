@@ -9,16 +9,22 @@
 
 @import 'grid/bootstrap-grid';
 
+@import 'plugins/selectric';
+
 
 body {
+  min-width: 320px;
+
+  transition: $base-transition;
+
+  color: $base-font-color;
+  background-color: $base-background-color;
+
   font-family: $font-family-base;
   font-size: $base-font-size;
   font-weight: 300;
   line-height: $base-line-height;
-  min-width: 320px;
-  transition: $base-transition;
-  color: $base-font-color;
-  background-color: $base-background-color;
+
   -webkit-font-smoothing: antialiased;
 }
 h1,
@@ -27,10 +33,11 @@ h3,
 h4,
 h5,
 h6 {
+  margin: 0 0 $small-spacing;
+
   font-family: $heading-font-family;
   font-size: $base-font-size;
   line-height: $heading-line-height;
-  margin: 0 0 $small-spacing;
 }
 p,
 pre {
@@ -39,6 +46,7 @@ pre {
 a {
   transition: $base-transition;
   text-decoration: none;
+
   color: $action-color;
   &:active,
   &:focus,
@@ -53,6 +61,7 @@ a {
 }
 hr {
   margin: $base-spacing 0;
+
   border-top: none;
   border-right: none;
   border-bottom: $base-border;
@@ -65,6 +74,7 @@ picture {
 }
 .wrapper {
   position: relative;
+
   width: 100%;
   min-height: 100%;
   margin: 0 auto;
@@ -85,9 +95,10 @@ nav {
 }
 
 .header--logo {
-  text-align-last: left;
   padding-top: 15px;
   padding-bottom: 15px;
+
+  text-align-last: left;
   a {
     text-decoration: none;
   }
@@ -97,23 +108,30 @@ nav {
 }
 
 .header--phone {
-  @extend .flex-center;
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
+
+  @extend .flex-center;
   a {
-    font-size: 18px;
-    color: #262028;
-    line-height: 1.11;
     text-decoration: none;
+
+    color: #262028;
+
+    font-size: 18px;
+    line-height: 1.11;
     &:before {
-      width: 20px;
-      height: 20px;
-      background-image: url(../img/ico-phone.png#spriteimage);
-      display: inline-block;
-      margin-right: 10px;
       position: relative;
       top: 3px;
+
+      display: inline-block;
+
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+
       content: '';
+
+      background-image: url(../img/ico-phone.png#spriteimage);
     }
     span {
       font-weight: 700;
@@ -125,18 +143,23 @@ nav {
 }
 
 .header--social {
-  padding-left: 0;
   padding-right: 0;
+  padding-left: 0;
+
   @extend .flex-center;
   a {
-    font-size: 0;
+    position: relative;
+
+    display: inline-block;
+
     width: 22px;
     height: 22px;
     margin: 0 5px;
-    display: inline-block;
-    position: relative;
+
     background-repeat: no-repeat;
     background-position: center;
+
+    font-size: 0;
     &:first-child{
       margin-left: 0;
     }
@@ -151,15 +174,17 @@ nav {
     }
   }
   .header--social__viber {
-    background-image: url(../img/ico-viber.png#spriteimage);
     height: 24px;
+
+    background-image: url(../img/ico-viber.png#spriteimage);
     &:hover {
       background-image: url(../img/ico-hover-viber.png#spriteimage);
     }
   }
   .header--social__skype {
-    background-image: url(../img/ico-skype.png#spriteimage);
     width: 23px;
+
+    background-image: url(../img/ico-skype.png#spriteimage);
     &:hover {
       background-image: url(../img/ico-hover-skype.png#spriteimage);
     }
@@ -171,9 +196,10 @@ nav {
     }
   }
   .header--social__facebook {
-    background-image: url(../img/ico-facebook.png#spriteimage);
     width: 11px;
     height: 20px;
+
+    background-image: url(../img/ico-facebook.png#spriteimage);
     &:hover {
       background-image: url(../img/ico-hover-facebook.png#spriteimage);
     }
@@ -188,82 +214,147 @@ nav {
 
 
 .header--lang {
-  form {
-    user-select: none;
-    background: #ffffff;
-    overflow: hidden;
-    border: 1px solid #cbcbcb;
-    border-radius: 3px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
-    transition: box-shadow 0.2s;
-    &:focus, &:hover {
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  @extend .flex-center;
+  // form {
+  //   overflow: hidden;
+
+  //   user-select: none;
+  //   transition: box-shadow 0.2s;
+  //   position: relative;
+
+  //   border: 1px solid #cbcbcb;
+  //   border-radius: 3px;
+  //   background: #ffffff;
+  //   width: 118px;
+  //   &:focus, &:hover {
+  //     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  //   }
+  //   &:after {
+  //     position: absolute;
+  //     z-index: 1;
+  //     top: 0;
+  //     right: 12px;
+
+  //     content: '▾';
+
+  //     color: #bbbbbb;
+
+  //     font-size: 14px;
+  //     line-height: 40px;
+  //   }
+  // }
+  // .ie form:after {
+  //   display: none;
+  // }
+
+  // select {
+  //   position: relative;
+  //   z-index: 2;
+
+  //   display: block;
+
+  //   width: 100%;
+  //   padding: 10px 10px 14px 12px;
+  //   margin: 0;
+  //   font-size: 15px;
+  //   cursor: pointer;
+  //   text-indent: 5px;
+  //   text-overflow: '';
+  //   color: $gray-dark;
+  //   border: none;
+  //   outline: none;
+  //   background: transparent;
+  //   background-image: none;
+
+  //   appearance: none;
+  //   &[multiple=multiple] {
+  //     height: auto;
+
+  //     transition: box-shadow 0.2s;
+
+  //     border: 1px solid #ebebeb;
+  //     border-radius: 3px;
+  //     box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
+  //     &:hover {
+  //       border-color: #cccccc;
+  //       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  //     }
+  //   }
+  //   option{
+
+  //     &[disabled] {
+  //       color: #eeeeee;
+  //       border: none;
+  //       text-shadow: none;
+  //     }
+  //   }
+  //   &:-moz-focusring {
+  //     color: transparent;
+  //     text-shadow: 0 0 0 #888888;
+  //   }
+  //   &::-ms-expand {
+  //     display: none;
+  //   }
+  // }
+  .selectric-wrapper {
+    width: 118px;
+  }
+  .ico {
+    display: inline-block;
+    zoom: 1;
+
+    width: 21px;
+    height: 15px;
+    margin-right: 9px;
+
+    vertical-align: middle;
+
+    background-repeat: no-repeat;
+    // *display: inline;
+    &.ico-eng {
+      background-image: url(../img/ico-lang--eng.png#spriteimage);
     }
-    &:after {
-      content: '▾';
-      position: absolute;
-      top: 0;
-      right: 12px;
-      z-index: 1;
-      color: #bbbbbb;
-      line-height: 40px;
-      font-size: 14px;
+    &.ico-ukr {
+      background-image: url(../img/ico-lang--ukr.png#spriteimage);
+    }
+    &.ico-rus {
+      background-image: url(../img/ico-lang--rus.png#spriteimage);
     }
   }
-  .ie form:after {
-    display: none;
-  }
-
-  select {
-    position: relative;
-    background: transparent;
-    background-image: none;
-    display: block;
-    width: 100%;
-    outline: none;
-    color: #888888;
-    cursor: pointer;
-    z-index: 2;
-    border: none;
-    padding: 10px 10px 10px 5px;
-    text-overflow: '';
-    text-indent: 5px;
-    appearance: none;
-  }
-  select[multiple=multiple] {
-    height: auto;
-    border: 1px solid #cbcbcb;
-    border-radius: 3px;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.07);
-    transition: box-shadow 0.2s;
-  }
-  select[multiple=multiple]:hover {
-    border-color: #cccccc;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  }
-  select option[disabled] {
-    color: #eeeeee;
-    text-shadow: none;
-    border: none;
-  }
-
-  select:-moz-focusring {
-    color: transparent;
-    text-shadow: 0 0 0 #888888;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
-
 }
 
 .header--button {
+  @extend .flex-center;
+  .ico-admission {
+    display: inline-block;
 
-  .header--button__admission {
+    width: 22px;
+    height: 20px;
+    margin: 0 16px 0 0;
 
+    background-image: url(../img/ico-admission.png#spriteimage);
   }
+  .header--button__admission {
+    width: 100%;
+
+    color: #ffffff;
+    background-color: $blue-gray;
+
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.25;
+
+    @extend .flex-center;
+    &:hover {
+      background-color: #f7f7f7;
+      color: $gray-dark;
+      .ico-admission {
+        background-image: url(../img/ico-admission--hover.png#spriteimage);
+      }
+    }
+  }
+
+
 }
 .header--dark {
   background-color: $blue-light;
@@ -272,12 +363,15 @@ nav {
 .header--nav {
   li {
     a {
+      padding: 22px 15px 19px;
+
+      color: #262028;
+      border-bottom: 3px solid transparent;
+
       font-weight: 300;
       line-height: 1.25;
-      color: #262028;
-      padding: 22px 15px 19px;
+
       @extend .flex-center;
-      border-bottom: 3px solid transparent;
     }
     &.menu-active,
     &:hover {
@@ -297,32 +391,117 @@ nav {
     padding: 0;
   }
   input {
-    margin: 0;
-    height: 40px;
     width: 100%;
+    height: 40px;
+    margin: 0;
+    padding-left: 50px;
+
+    color: $black;
     background-color: #ffffffff;
     background-image: url(../img/ico-search.png);
     background-repeat: no-repeat;
     background-position: 20px center;
-    padding-left: 50px;
+
     font-size: 15px;
-    color: $black;
   }
 }
 
+.breadcrumbs {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  a {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 3.29;
+    color: #202020;
+    margin-right: 25px;
+    display: inline-block;
+
+    &.delimetr {
+
+    }
+    &:last-child {
+      color: red;
+    }
+  }
+}
 
 section {
   padding: 0;
 }
 article {
   @extend .clearfix;
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 26px;
+  }
+  h1, h2, h3 {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  h4, h5, h6 {
+    line-height: 1.1;
+    font-weight: 500;
+
+  }
+  h1 {
+    font-size: 220%;
+  }
+  h2 {
+    font-size: 200%;
+  }
+  h3 {
+    font-size: 180%;
+  }
+  h4 {
+    font-size: 150%;
+  }
+  h5 {
+    font-size: 140%;
+  }
+  h6 {
+    font-size: 120%;
+  }
+  ul,ol {
+    margin-bottom: 14px;
+    padding-left: 28px;
+    list-style-position: inside;
+    li {
+      margin-bottom: 14px;
+    }
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc
+  }
+
 }
 .looper {
   @extend .clearfix;
 }
+
+.page-title {
+  color: $gray-dark;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+
+.article-slider {
+  width: calc(50% - 15px);
+  float: right;
+  margin-left: 30px;
+  border: 1px solid red;
+}
+
+
+
 footer {
   height: $footer;
   margin: auto 0;
+
   background-color: $gray-light;
 }
 
