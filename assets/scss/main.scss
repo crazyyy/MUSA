@@ -346,8 +346,8 @@ nav {
 
     @extend .flex-center;
     &:hover {
-      background-color: #f7f7f7;
       color: $gray-dark;
+      background-color: #f7f7f7;
       .ico-admission {
         background-image: url(../img/ico-admission--hover.png#spriteimage);
       }
@@ -410,12 +410,15 @@ nav {
   padding-top: 30px;
   padding-bottom: 30px;
   a {
+    display: inline-block;
+
+    margin-right: 25px;
+
+    color: #202020;
+
     font-size: 14px;
     font-weight: 300;
     line-height: 3.29;
-    color: #202020;
-    margin-right: 25px;
-    display: inline-block;
 
     &.delimetr {
 
@@ -439,8 +442,8 @@ article {
     line-height: 1.2;
   }
   h4, h5, h6 {
-    line-height: 1.1;
     font-weight: 500;
+    line-height: 1.1;
 
   }
   h1 {
@@ -464,6 +467,7 @@ article {
   ul,ol {
     margin-bottom: 14px;
     padding-left: 28px;
+
     list-style-position: inside;
     li {
       margin-bottom: 14px;
@@ -473,7 +477,7 @@ article {
     list-style: decimal;
   }
   ul {
-    list-style: disc
+    list-style: disc;
   }
 
 }
@@ -482,28 +486,343 @@ article {
 }
 
 .page-title {
+  margin-bottom: 30px;
+
   color: $gray-dark;
+
   font-size: 30px;
   font-weight: 700;
   line-height: 1.1;
-  margin-bottom: 30px;
 }
 
 .article-slider {
-  width: calc(50% - 15px);
   float: right;
+
+  width: calc(50% - 15px);
   margin-left: 30px;
+
   border: 1px solid red;
 }
 
 
 
 footer {
-  height: $footer;
-  margin: auto 0;
+  height: auto;
 
-  background-color: $gray-light;
+  background-color: $black;
+  .container-border {
+    position: relative;
+    &:before,
+    &:after{
+      display: block;
+      height: 1px;
+      content: '';
+      position: absolute;
+      background-color: $gray-dark;
+      left: 0;
+      right: 0;
+    }
+    &:before {
+      top: 0;
+    }
+    &:after {
+      bottom: 0;
+    }
+  }
+  .footer--widget {
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    color: $gray;
+
+    font-size: 15px;
+    font-weight: 300;
+    h6 {
+      margin-bottom: 20px;
+
+      color: #ffffff;
+
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    ul {
+      li {
+        margin-bottom: 12px;
+      }
+      a {
+        color: $gray;
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
+  .footer--nav {
+    padding: 40px 0 40px 25%;
+
+    background-image: url(../img/logo-footer.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+
+
+    ul {
+      display: flex;
+      align-content: space-around;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+
+      width: 100%;
+      li {
+        display: inline-block;
+        a {
+          padding-top: 20px;
+          padding-bottom: 20px;
+
+          color: #ffffff;
+          border-bottom: 3px solid transparent;
+
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 1.25;
+        }
+        &:hover {
+          a{
+            color: $blue-gray;
+            border-bottom: 3px solid $blue-gray;
+          }
+        }
+      }
+    }
+  }
+
+  .footer--order {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    h6 {
+      margin-bottom: 20px;
+
+      color: #ffffff;
+
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .footer--order__subtitle {
+      margin-bottom: 30px;
+
+      color: $gray;
+
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 2.27;
+    }
+
+    form {
+      display: flex;
+      align-content: space-around;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      input,
+      textarea,
+      button {
+        border: 0;
+        border-radius: 3px;
+      }
+      input,
+      textarea {
+        padding: 15px;
+
+        color: $gray;
+        background-color: $gray-dark;
+
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.3;
+      }
+      input,
+      button {
+        width: 24%;
+        margin-bottom: 30px;
+
+      }
+      input {
+
+      }
+
+      button {
+        padding: 15px;
+
+        color: #ffffff;
+        outline: none;
+        background-color: $blue-gray;
+
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 1.3;
+        &:hover {
+          background-color: $gray;
+        }
+      }
+
+      textarea {
+        width: 100%;
+        height: 80px;
+      }
+    }
+  }
+
+  .footer--copyright,
+  .footer--share,
+  .footer--social  {
+    display: flex;
+    align-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    height: 145px;
+  }
+  .footer--copyright {
+    justify-content: flex-start;
+    p {
+      color: $gray;
+
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.33;
+    }
+  }
+
+  .footer--share {
+    justify-content: center;
+
+    height: 145px;
+    .footer--share__share {
+      width: 124px;
+      height: 38px;
+
+      background-color: #354d8b;
+      margin: 0 5px;
+    }
+    .footer--share__item {
+      margin: 0 2px;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-size: 0;
+      &.footer--share__item_1 {
+        background-image: url(../img/footer--share__item_1.png);
+      }
+      &.footer--share__item_2 {
+        background-image: url(../img/footer--share__item_2.png);
+      }
+      &.footer--share__item_3 {
+        background-image: url(../img/footer--share__item_3.png);
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .footer--social {
+    justify-content: flex-end;
+
+    height: 145px;
+    padding-right: 0;
+    padding-left: 0;
+    a {
+      position: relative;
+
+      display: inline-block;
+
+      width: 22px;
+      height: 22px;
+      margin: 0 5px;
+
+      background-repeat: no-repeat;
+      background-position: center;
+
+      font-size: 0;
+      &:first-child{
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    .footer--social__whatsapp {
+      background-image: url(../img/ico-whatsapp.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-whatsapp.png#spriteimage);
+      }
+    }
+    .footer--social__viber {
+      height: 24px;
+
+      background-image: url(../img/ico-viber.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-viber.png#spriteimage);
+      }
+    }
+    .footer--social__skype {
+      width: 23px;
+
+      background-image: url(../img/ico-skype.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-skype.png#spriteimage);
+      }
+    }
+    .footer--social__messenger {
+      background-image: url(../img/ico-messenger.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-messenger.png#spriteimage);
+      }
+    }
+    .footer--social__facebook {
+      width: 11px;
+      height: 20px;
+
+      background-image: url(../img/ico-facebook.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-facebook.png#spriteimage);
+      }
+    }
+    .footer--social__instagram {
+      background-image: url(../img/ico-instagram.png#spriteimage);
+      &:hover {
+        background-image: url(../img/ico-hover-instagram.png#spriteimage);
+      }
+    }
+  }
+
+
+  .footer--bankdetails {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    p {
+      color: $gray;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
 }
+
+
+
+
+
 
 @import "media";
 
