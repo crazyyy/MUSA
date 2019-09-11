@@ -1,6 +1,6 @@
 {
-  "domain": "wp-framework.dev",
-  "theme": "wp-framework",
+  "domain": "musa.local",
+  "theme": "wp-musa",
   "path": {
     "base": {
       "src":"assets/",
