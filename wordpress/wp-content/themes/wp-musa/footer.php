@@ -1,6 +1,3 @@
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-
     </section><!-- /section -->
   </div><!-- /wrapper -->
 

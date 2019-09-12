@@ -1,6 +1,6 @@
-(function() {
+(function () {
   var method
-  var noop = function() {}
+  var noop = function () {}
   var methods = [
     "assert",
     "clear",
@@ -46,10 +46,28 @@ if (typeof jQuery === "undefined") {
 }
 // Place any jQuery/helper plugins in here.
 
-(function(){
-  $('.header--lang select').selectric({
-    optionsItemBuilder: function(itemData, element, index) {
-      return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
-    }
-  });
-})()
+// (function(){
+//   $('.header--lang select').selectric({
+//     optionsItemBuilder: function(itemData, element, index) {
+//       return element.val().length ? '<span class="ico ico-' + element.val() +  '"></span>' + itemData.text : itemData.text;
+//     }
+//   });
+// })()
+
+(function () {
+  let articleSliderCarousel = $('.article-slider--carousel');
+  if (articleSliderCarousel) {
+    articleSliderCarousel.owlCarousel({
+      items: 1,
+      loop: true,
+      nav: true,
+      margin: 10,
+      autoplay: true,
+      // slideTransition: 1000,
+      lazyLoad:true,
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true
+    });
+  }
+
+})();

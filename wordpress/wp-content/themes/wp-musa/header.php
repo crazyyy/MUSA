@@ -94,5 +94,3 @@
   </header><!-- /header -->
 
   <section role="main">
-    <div class="container">
-      <div class="row">

@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php /* Template Name: Public Contract Page */ get_header(); ?>
   <div class="container">
     <div class="row">
       <?php if (function_exists('easy_breadcrumbs')) easy_breadcrumbs(); ?>
