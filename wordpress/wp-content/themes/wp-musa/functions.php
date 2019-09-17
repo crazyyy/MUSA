@@ -52,6 +52,12 @@ function wpeHeaderScripts() {
   wp_register_script('jquery', '//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js', array(), '3.4.1');
   wp_enqueue_script('jquery');
 
+  wp_register_script('popper', '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', array(), '1.14.7', true);
+  wp_enqueue_script('popper');
+
+  wp_register_script('bootstrap', '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js', array(), '4.3.1', true);
+  wp_enqueue_script('bootstrap');
+
   // wp_register_script('vue', '//cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', array(), '2.6.10');
   // wp_enqueue_script('vue');
 
@@ -154,41 +160,23 @@ function wpeFootNav() {
     )
   );
 }
-// WPE sidebar navigation
-function wpeSideNav() {
-  wp_nav_menu(
-  array(
-    'theme_location'  => 'sidebar-menu',
-    'menu'            => '',
-    'container'       => 'div',
-    'container_class' => 'menu-{menu slug}-container',
-    'container_id'    => '',
-    'menu_class'      => 'menu',
-    'menu_id'         => '',
-    'echo'            => true,
-    'fallback_cb'     => 'wp_page_menu',
-    'before'          => '',
-    'after'           => '',
-    'link_before'     => '',
-    'link_after'      => '',
-    'items_wrap'      => '<ul class="sidebarnav">%3$s</ul>',
-    'depth'           => 0,
-    'walker'          => ''
-    )
-  );
-}
+
 //  Register WPE Navigation
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 function register_html5_menu() {
   register_nav_menus(array(
     'header-menu' => __('Header Nav', 'wpeasy'),
-    'sidebar-menu' => __('Sidebar Nav', 'wpeasy'),
-    'footer-menu' => __('Footer Nav', 'wpeasy')
+    'footer-menu-1' => __('Footer #1', 'wpeasy'),
+    'footer-menu-2' => __('Footer #2', 'wpeasy'),
+    'footer-menu-3' => __('Footer #3', 'wpeasy'),
+    'footer-menu-4' => __('Footer #4', 'wpeasy'),
+    'footer-menu' => __('Footer Main', 'wpeasy')
   ));
 }
 //  If Dynamic Sidebar Existsов
 if (function_exists('register_sidebar')) {
   //  Define Sidebar Widget Area 1
+  /*
   register_sidebar(array(
     'name' => __('Widgets area #1', 'wpeasy'),
     'description' => __('Description for this widget-area...', 'wpeasy'),
@@ -242,13 +230,13 @@ function wpeExcerpt($length_callback = '', $more_callback = '') {
 
 //  Custom View Article link to Post
 //  RU: Добавляем "Читать дальше" к обрезанным записям
-/*
+
 function html5_blank_view_article($more) {
   global $post;
-  return '... <!-- noindex --><a rel="nofollow" class="view-article" href="' . get_permalink($post->ID) . '">' . __('View Article', 'wpeasy') . '</a><!-- /noindex -->';
+  return '...';
 }
 add_filter('excerpt_more', 'html5_blank_view_article'); // Add 'View Article' button instead of [...] for Excerpts
-*/
+
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
 add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <div> from WP Navigation
 function my_wp_nav_menu_args($args = '') {
@@ -732,13 +720,64 @@ function register_cpts_university() {
 		'hierarchical' => false,
 		'query_var' => true,
 		'menu_position' => 3,
-    'menu_icon' => 'dashicons-admin-multisite',
+    'menu_icon' => 'dashicons-welcome-learn-more',
     // https://developer.wordpress.org/resource/dashicons/
-    'supports' => array( 'title', 'editor', 'thumbnail', 'revisions' ),
+    'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
     'rewrite' => array( 'slug' => 'university', 'with_front' => false ),
 	);
 
 	register_post_type( 'university', $args );
+}
+
+add_action( 'init', 'register_cpts_city' );
+function register_cpts_city() {
+	/**
+	 * Post Type: City.
+	*/
+
+  $labels = array(
+	'name' => __( 'Cities', 'wpeasy' ),
+    'singular_name' => __( 'City', 'wpeasy' ),
+    'add_new' => __( 'Add', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'edit' => __( 'Edit', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'new-item' => __( 'Add', 'wpeasy' ),
+    'view' => __( 'View', 'wpeasy' ),
+    'view' => __( 'View', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'not_found' => __( 'Not Found', 'wpeasy' ),
+    'not_found_in_trash' => __( 'Not Found', 'wpeasy' ),
+    'parent' => __( 'Not Parent', 'wpeasy' )
+	);
+
+	$args = array(
+		'label' => __( 'Cities', 'wpeasy' ),
+		'labels' => $labels,
+		'description' => '',
+		'public' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'delete_with_user' => false,
+		'show_in_rest' => true,
+		'rest_base' => '',
+		'rest_controller_class' => 'WP_REST_Posts_Controller',
+		'has_archive' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'exclude_from_search' => false,
+		'capability_type' => 'post',
+		'map_meta_cap' => true,
+		'hierarchical' => false,
+		'query_var' => true,
+		'menu_position' => 4,
+    'menu_icon' => 'dashicons-admin-site-alt3',
+    // https://developer.wordpress.org/resource/dashicons/
+    'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
+    'rewrite' => array( 'slug' => 'city', 'with_front' => false ),
+	);
+
+	register_post_type( 'city', $args );
 }
 
 ?>

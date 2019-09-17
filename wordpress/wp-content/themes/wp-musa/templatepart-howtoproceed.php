@@ -1,8 +1,8 @@
-<div class="container-fluid container-howtoproceed">
+<div class="container-fluid container-howtoproceed container-color--bluelight">
   <div class="row">
     <div class="container">
       <div class="row">
-        <h6 class="howtoproceed-title col-12">How to proceed</h6>
+        <h6 class="howtoproceed-title col-12"><?php echo __('How to proceed', 'wpeasy'); ?></h6>
         <div class="howtoproceed-item howtoproceed-item--choose col-2">
           <p><a href="">Choose</a> a program of study</p>
         </div>

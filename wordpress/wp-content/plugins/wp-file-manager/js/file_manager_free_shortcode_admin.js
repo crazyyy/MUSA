@@ -26,7 +26,8 @@ jQuery(document).ready(function () {
                     if (filepaths != '') {
                         var data = {
                             'action': 'mk_file_folder_manager_media_upload',
-                            'uploadefiles': filepaths
+                            'uploadefiles': filepaths,
+							'_wpnonce': security_key
                         };
                         jQuery.post(ajaxurl, data, function (response) {
 

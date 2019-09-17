@@ -44,6 +44,8 @@ Woody ad snippets will make your life so much easier. The plugin helps to create
 You create a text snippet and add a repeated text or a template. You can add a shortcode for the contact form, in case it’s universal for all website pages. Now you can add conditions to show this content to registered users only. Save the text snippet and go to editing pages.  If you use the Gutenberg editor, you need to select a special unit. For the classic editor, click the icon of our plugin and add a shortcode of your new snippet.
 As you can see, working with snippets is super easy!
 
+https://youtu.be/FNoNsl_jy2k
+
 ### All Plugin Features:###
 * Header footer code manager
 * User-friendly code editor with syntax highlighter.
@@ -210,6 +212,12 @@ We will definitely add multisite support in the future. You can speed up this pr
 6. Adding a snippet shortcode to a text widget
 
 == Changelog ==
+= 2.2.8 (13.09.2019) =
+* Added: Compatibility with WPML proposed in the support [forum](https://wpml.org/forums/topic/header-and-foster-scripts-translation/)
+* Fixed: Security issue
+* Fixed: Some users saw the code in the plugin description column. This could lead to JavaScript execution, which led to problems using the plugin [Issue #1](http://forum.webcraftic.com/threads/script-tags-execute-from-description-list.282/), [Issue #2](http://forum.webcraftic.com/threads/insert-php-code-appears-in-description-column.407/#post-1377).
+* Fixed: Conditional logic for taxonomies worked only inside singular posts. In taxonomies, tags, and categories, this did not work [Issue #3](http://forum.webcraftic.com/threads/kak-propisat-vyvod-snipeta-na-konkretnoj-stranice.399/)
+
 = 2.2.7 =
 * Fixed: Critical php errors
 

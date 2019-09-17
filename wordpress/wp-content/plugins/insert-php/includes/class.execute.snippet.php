@@ -289,6 +289,8 @@ class WINP_Execute_Snippet {
 	/**
 	 * Execute the snippets once the plugins are loaded
 	 *
+	 * @since 2.2.8 Added compatibility with WPML
+	 *
 	 * @param string $scope
 	 * @param string $auto
 	 * @param string $content
@@ -299,10 +301,27 @@ class WINP_Execute_Snippet {
 	public function executeActiveSnippets( $scope = 'evrywhere', $auto = '', $content = '', $custom_params = [] ) {
 		global $wpdb;
 
+		# Compatibility with WPML proposed in the support forum:
+		# https://wpml.org/forums/topic/header-and-foster-scripts-translation/
+		#------------------------------------------------------
+		$join  = '';
+		$where = '';
+		if ( apply_filters( 'wpml_setting', false, 'setup_complete' ) ) {
+			$type = 'post_' . WINP_SNIPPETS_POST_TYPE;
+			$join = " LEFT JOIN {$wpdb->prefix}icl_translations ON element_id = ID AND element_type = '$type'";
+
+			$language = apply_filters( 'wpml_current_language', false );
+			$where    = " language_code = '$language' AND ";
+		}
+		#------------------------------------------------------
+
 		$snippets = $wpdb->get_results( "SELECT {$wpdb->posts}.ID, {$wpdb->posts}.post_content
- 					FROM {$wpdb->posts}
- 					INNER JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id )
- 					WHERE ( ( {$wpdb->postmeta}.meta_key = '" . WINP_Plugin::app()->getPrefix() . "snippet_scope' AND {$wpdb->postmeta}.meta_value = '{$scope}' )	) AND {$wpdb->posts}.post_type = '" . WINP_SNIPPETS_POST_TYPE . "' AND ( ({$wpdb->posts}.post_status = 'publish') )" );
+                    FROM {$wpdb->posts} $join
+                    INNER JOIN {$wpdb->postmeta} ON ( {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id )
+                    WHERE  $where  ( ( {$wpdb->postmeta}.meta_key = '" . WINP_Plugin::app()->getPrefix() . "snippet_scope' 
+                    AND {$wpdb->postmeta}.meta_value = '{$scope}' ) ) 
+                    AND {$wpdb->posts}.post_type = '" . WINP_SNIPPETS_POST_TYPE . "' 
+                    AND ( ({$wpdb->posts}.post_status = 'publish') )" );
 
 		if ( empty( $snippets ) ) {
 			return $content;
@@ -932,17 +951,23 @@ class WINP_Execute_Snippet {
 	/**
 	 * A taxonomy of the current page
 	 *
+	 * @since 2.2.8 The bug is fixed, the condition was not checked
+	 *              for tachonomies, only posts.
+	 *
 	 * @param $operator
 	 * @param $value
 	 *
 	 * @return boolean
 	 */
 	private function location_taxonomy( $operator, $value ) {
-		global $post;
+		$term_id = null;
 
-		$post_cat = get_the_category( $post->ID );
-		if ( isset( $post_cat[0] ) ) {
-			return $this->checkByOperator( $operator, intval( $value ), $post_cat[0]->term_id );
+		if ( is_tax() || is_tag() || is_category() ) {
+			$term_id = get_queried_object()->term_id;
+
+			if ( $term_id ) {
+				return $this->checkByOperator( $operator, intval( $value ), $term_id );
+			}
 		}
 
 		return false;

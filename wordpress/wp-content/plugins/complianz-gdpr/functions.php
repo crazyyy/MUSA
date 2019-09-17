@@ -289,6 +289,8 @@ if (!function_exists('cmplz_get_region_for_country')) {
     }
 }
 
+
+
 if (!function_exists('cmplz_notice')) {
     /**
      * @param string $msg
@@ -629,11 +631,13 @@ if (!function_exists('cmplz_init_cookie_blocker')) {
 if (!function_exists('cmplz_is_pagebuilder_preview')) {
     function cmplz_is_pagebuilder_preview()
     {
-        if (isset($_GET['fb-edit']) || isset($_GET['et_pb_preview']) || isset($_GET['et_fb']) || isset($_GET['elementor-preview']) || isset($_GET['fl_builder'])) {
-            return true;
-        } else {
-            return false;
+        $preview = false;
+        global $wp_customize;
+        if (isset( $wp_customize ) || isset($_GET['fb-edit']) || isset($_GET['et_pb_preview']) || isset($_GET['et_fb']) || isset($_GET['elementor-preview']) || isset($_GET['fl_builder'])) {
+            $preview = true;
         }
+
+        return apply_filters('cmplz_is_preview', $preview);
     }
 }
 
@@ -953,7 +957,7 @@ if (!function_exists('cmplz_placeholder')) {
 
         switch ($type) {
             case 'googlemaps':
-                $key_pattern = '/key=(.*?)&/i';
+                $key_pattern = '/maps\.googleapis\.com\/maps\/api\/staticmap\?key\=(.*?)&/i';
                 if (preg_match($key_pattern, $src, $matches)) {
                     $id = $matches[1];
                     $new_src = get_transient('cmplz_googlemaps_image_'.sanitize_title($id));
@@ -961,6 +965,8 @@ if (!function_exists('cmplz_placeholder')) {
                         $new_src = cmplz_download_to_site(html_entity_decode($src), sanitize_title($id), false);
                         set_transient('cmplz_googlemaps_image_'.sanitize_title($id), $new_src, MONTH_IN_SECONDS);
                     }
+                } else {
+                    $new_src = cmplz_default_placeholder($type);
                 }
                 break;
             case 'youtube':
@@ -1134,7 +1140,7 @@ if (!function_exists('cmplz_default_placeholder')){
             $img_url = trailingslashit(get_stylesheet_directory_uri()) . dirname(cmplz_path) . $img;
         }
 
-        return apply_filters('cmplz_default_placeholder', $img_url);
+        return apply_filters('cmplz_default_placeholder', $img_url, $type);
     }
 }
 
@@ -1274,6 +1280,8 @@ if (!function_exists('cmplz_get_used_consenttypes')) {
         $consent_types = array();
         //for each region, get the consenttype
         foreach ($regions as $region => $label){
+            if (!isset(COMPLIANZ()->config->regions[$region]['type'])) continue;
+
             $consent_types[] = COMPLIANZ()->config->regions[$region]['type'];
         }
 

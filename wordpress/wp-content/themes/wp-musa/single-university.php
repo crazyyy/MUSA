@@ -8,26 +8,14 @@
         <article id="post-<?php the_ID(); ?>" <?php post_class('article--content col-md-12'); ?>>
           <h1 class="page-title"><?php the_title(); ?></h1>
 
-          <?php $images = get_field('slider'); if( $images ): ?>
-            <div class="article-slider" id="article-slider">
-              <div class="article-slider--carousel owl-carousel owl-theme">
-                <?php foreach( $images as $image ): ?>
-                  <div class="item">
-                    <img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>" />
-                  </div>
-                <?php endforeach; ?>
-              </div>
-              <a href="#" class="article-slider--apply"><i class="ico ico-apply">apply</i><?php echo __('Apply now', 'wpeasy'); ?></a>
-            </div>
-            <!-- /.article-slider -->
-          <?php endif; ?>
+          <?php get_template_part('templatepart-articleslider'); ?>
 
           <?php the_content(); ?>
 
           <table class="university-programs">
             <tr>
-              <th><i class="ico ico-programs"></i>Programs</th>
-              <th><i class="ico ico-cost"></i>Cost of education</th>
+              <th><i class="ico ico-programs"></i><?php echo __('Programs', 'wpeasy'); ?></th>
+              <th><i class="ico ico-cost"></i><?php echo __('Cost of education', 'wpeasy'); ?></th>
             </tr>
             <tr>
               <td>Berdiansk University of management and business</td>

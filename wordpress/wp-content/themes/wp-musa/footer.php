@@ -156,5 +156,18 @@
 
   <?php wp_footer(); ?>
 
+  <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <button type="button" class="close btn-round btn-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

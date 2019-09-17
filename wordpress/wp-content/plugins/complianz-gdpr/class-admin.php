@@ -42,8 +42,8 @@ if (!class_exists("cmplz_admin")) {
 
 
             //deprecated strings
-            $deprecated_strings = _x('You can use your internet browser to automatically or manually delete cookies. You can also specify that certain cookies may not be placed. Another option is to change the settings of your internet browser so that you receive a message each time a cookie is placed. For more information about these options, please refer to the instructions in the Help section of your browser. Or you can indicate your preferences on the following page:  www.youronlinechoices.eu.',  'Legal document cookie policy','complianz-gdpr');
-
+            $deprecated_strings = _x('We make decisions on the basis of automated processing with respect to matters that may have (significant) consequences for individuals. These are decisions taken by computer programmes or systems without human intervention.', 'Legal document privacy statement', 'complianz-gdpr');
+            $deprecated_strings = _x('A script is a piece of programme code that is used to make our website function properly and interactively. This code is executed on our server or on your device.', 'Legal document cookie policy', 'complianz-gdpr');
 
 
         }
@@ -127,7 +127,7 @@ if (!class_exists("cmplz_admin")) {
             //when debug is enabled, a timestamp is appended. We strip this for version comparison purposes.
             $prev_version = get_option('cmplz-current-version', false);
 //            if (defined("SCRIPT_DEBUG") && SCRIPT_DEBUG) $prev_version = substr($prev_version,0, 5);
-//
+
             //as of 1.1.10, publish date is stored in variable.
             if ($prev_version && version_compare($prev_version, '1.2.0', '<')) {
                 $date = get_option('cmplz_publish_date');
@@ -436,6 +436,15 @@ if (!class_exists("cmplz_admin")) {
                 array($this, 'settings')
             );
 
+            add_submenu_page(
+                'complianz',
+                __('Proof of consent', 'complianz-gdpr'),
+                __('Proof of consent', 'complianz-gdpr'),
+                'manage_options',
+                "cmplz-proof-of-consent",
+                array(COMPLIANZ()->cookie, 'cookie_statement_snapshots')
+            );
+
             do_action('cmplz_admin_menu');
 
             if (defined('cmplz_free') && cmplz_free){
@@ -528,6 +537,9 @@ if (!class_exists("cmplz_admin")) {
         {
             if (cmplz_wp_privacy_version()) {
                 ?>
+                <li><i class="fas fa-plus"></i><a
+                            href="<?php echo admin_url('admin.php?page=cmplz-proof-of-consent') ?>"><?php _e("Proof of consent", 'complianz-gdpr'); ?></a>
+                </li>
                 <li><i class="fas fa-plus"></i><a
                             href="<?php echo admin_url('tools.php?page=export_personal_data') ?>"><?php _e("Export personal data", 'complianz-gdpr'); ?></a>
                 </li>

@@ -135,6 +135,10 @@ Yes, You can achieve any files and folders as zip then simple download it. Pleas
 
 == Changelog ==
 
+= 5.4 (16th AUGUST, 2019) =
+
+* Minor fixes and added logs demo screenshots.
+
 = 5.3 (20th AUGUST, 2019) =
 
 * Rate us bar repetition removed.

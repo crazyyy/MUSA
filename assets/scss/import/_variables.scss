@@ -11,14 +11,15 @@ $heading-font-family: $font-family-base;
 $blue: #477dca;
 $blue-light: #f4f4f4;
 $blue-gray: #607d8b;
+$blue-dark: #606060;
 $black: #151515;
 $gray: #909090;
 $gray-dark: #252525;
 $gray-medium: #999;
 $gray-light: #ebebeb;
+$red: #f04243;
 
 $orange: orange;
-$red: red;
 
 // font weight
 $fubold: 900; // Extra Black, Fat, Poster or Ultra Black
@@ -60,7 +61,7 @@ $secondary-background-color: tint($base-border-color, 75%);
 // Box Shadows
 // $base-box-shadow: 0 1px 3px rgba(#000, .06);
 // https://www.cssmatic.com/box-shadow
-$base-box-shadow: 0px 0px 30px 5px rgba(0,0,0,0.25);
+$base-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
 
 // Forms
 $form-box-shadow: inset 0 1px 3px rgba(#000, .06);
@@ -78,4 +79,4 @@ $base-transition: background-color $base-duration * 5 $base-timing, color $base-
   justify-content: center;
   align-content: center;
   align-items: center;
-  }
+}

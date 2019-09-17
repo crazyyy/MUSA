@@ -25,8 +25,13 @@ if (!class_exists("cmplz_integrations")) {
 
 
             add_filter('wpgmza_gdpr_notice_html', array($this, 'wp_google_maps_replace_gdpr_notice'));
+            add_filter('cmplz_fields', array($this, 'filter_fields'));
+            add_filter('cmplz_warnings', array($this, 'filter_warnings'));
+
+
 
             $this->integrate();
+
 
         }
 
@@ -79,7 +84,7 @@ if (!class_exists("cmplz_integrations")) {
 
         public function monsterinsights(){
 
-            if (class_exists('MonsterInsights_Lite')){
+            if (function_exists('MonsterInsights')){
                 return true;
             }
             return false;
@@ -169,6 +174,27 @@ if (!class_exists("cmplz_integrations")) {
                 remove_action('cmplz_notice_compile_statistics', array(COMPLIANZ()->cookie, 'show_compile_statistics_notice'), 10);
             }
 
+        }
+
+        /**
+         * Hide the stats configuration options when monsterinsights is enabled.
+         * @param $fields
+         * @return mixed
+         */
+
+        public function filter_fields($fields){
+            if ($this->monsterinsights()){
+                unset($fields['configuration_by_complianz']);
+                unset($fields['UA_code']);
+            }
+            return $fields;
+        }
+
+        public function filter_warnings($warnings){
+            if ($this->monsterinsights()){
+                unset($warnings['ga-needs-configuring']);
+            }
+            return $warnings;
         }
 
         /**

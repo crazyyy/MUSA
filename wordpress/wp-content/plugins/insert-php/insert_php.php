@@ -4,7 +4,7 @@
  * Plugin URI: http://woody-ad-snippets.webcraftic.com/
  * Description: Executes PHP code, uses conditional logic to insert ads, text, media content and external service’s code. Ensures no content duplication.
  * Author: Will Bontrager Software, LLC <will@willmaster.com>, Webcraftic <wordpress.webraftic@gmail.com>
- * Version: 2.2.7
+ * Version: 2.2.8
  * Text Domain: insert-php
  * Domain Path: /languages/
  * Author URI: http://webcraftic.com
@@ -67,9 +67,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // @formatter:off
-
-
-
 /**
  * -----------------------------------------------------------------------------
  * CHECK REQUIREMENTS
@@ -96,6 +93,14 @@ $plugin_info = array(
 			'support'  => 'support',                                // {site}/support
 			'docs'     => 'getting-started-with-woody-ad-snippets', // {site}/docs
 		),
+	),
+
+	// PLUGIN ADVERTS
+	'render_adverts' => true,
+	'adverts_settings'    => array(
+		'dashboard_widget' => true, // show dashboard widget (default: false)
+		'right_sidebar'    => true, // show adverts sidebar (default: false)
+		'notice'           => true, // show notice message (default: false)
 	),
 
 	// PLUGIN UPDATED SETTINGS
@@ -128,22 +133,23 @@ $plugin_info = array(
 
 	// FRAMEWORK MODULES
 	'load_factory_modules' => array(
-		array( 'libs/factory/bootstrap', 'factory_bootstrap_420', 'admin' ),
-		array( 'libs/factory/forms', 'factory_forms_417', 'admin' ),
-		array( 'libs/factory/pages', 'factory_pages_419', 'admin' ),
+		array( 'libs/factory/bootstrap', 'factory_bootstrap_422', 'admin' ),
+		array( 'libs/factory/forms', 'factory_forms_419', 'admin' ),
+		array( 'libs/factory/pages', 'factory_pages_421', 'admin' ),
 		array( 'libs/factory/types', 'factory_types_410' ),
 		array( 'libs/factory/taxonomies', 'factory_taxonomies_330' ),
 		array( 'libs/factory/metaboxes', 'factory_metaboxes_409', 'admin' ),
 		array( 'libs/factory/viewtables', 'factory_viewtables_410', 'admin' ),
 		array( 'libs/factory/shortcodes', 'factory_shortcodes_329', 'all' ),
-		array( 'libs/factory/freemius', 'factory_freemius_108', 'all' ),
+		array( 'libs/factory/freemius', 'factory_freemius_109', 'all' ),
+		array( 'libs/factory/adverts', 'factory_adverts_103', 'admin')
 	),
 );
 
 /**
  * Checks compatibility with WordPress, php and other plugins.
  */
-$wbcr_compatibility = new Wbcr_Factory419_Requirements( __FILE__, array_merge( $plugin_info, array(
+$wbcr_compatibility = new Wbcr_Factory421_Requirements( __FILE__, array_merge( $plugin_info, array(
 	'plugin_already_activate' => defined( 'WINP_PLUGIN_ACTIVE' ),
 	'required_php_version'    => '5.4',
 	'required_wp_version'     => '4.2.0',

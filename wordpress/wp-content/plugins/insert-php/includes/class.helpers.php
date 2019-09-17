@@ -552,18 +552,18 @@ class WINP_Helper {
 	 * @return string
 	 */
 	public static function get_factory_class() {
-		return "factory-bootstrap-420 factory-fontawesome-000";
+		return "factory-bootstrap-422 factory-fontawesome-000";
 	}
 
 	/**
-	 * Wrapper for Wbcr_FactoryForms417_OptionsValueProvider object
+	 * Wrapper for Wbcr_FactoryForms419_OptionsValueProvider object
 	 *
 	 * @param $plugin
 	 *
-	 * @return Wbcr_FactoryForms417_OptionsValueProvider
+	 * @return Wbcr_FactoryForms419_OptionsValueProvider
 	 */
 	public static function get_options_value_provider( $plugin ) {
-		return new Wbcr_FactoryForms417_OptionsValueProvider( $plugin );
+		return new Wbcr_FactoryForms419_OptionsValueProvider( $plugin );
 	}
 
 	/**
@@ -572,10 +572,10 @@ class WINP_Helper {
 	 * @param $options
 	 * @param $plugin
 	 *
-	 * @return Wbcr_FactoryForms417_Form
+	 * @return Wbcr_FactoryForms419_Form
 	 */
 	public static function get_factory_form( $options, $plugin ) {
-		return new Wbcr_FactoryForms417_Form( $options, $plugin );
+		return new Wbcr_FactoryForms419_Form( $options, $plugin );
 	}
 
 	/**
