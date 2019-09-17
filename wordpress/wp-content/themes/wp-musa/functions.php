@@ -780,4 +780,56 @@ function register_cpts_city() {
 	register_post_type( 'city', $args );
 }
 
+
+add_action( 'init', 'register_cpts_services' );
+function register_cpts_services() {
+	/**
+	 * Post Type: Services.
+	*/
+
+  $labels = array(
+	'name' => __( 'Services', 'wpeasy' ),
+    'singular_name' => __( 'Service', 'wpeasy' ),
+    'add_new' => __( 'Add', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'edit' => __( 'Edit', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'new-item' => __( 'Add', 'wpeasy' ),
+    'view' => __( 'View', 'wpeasy' ),
+    'view' => __( 'View', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'not_found' => __( 'Not Found', 'wpeasy' ),
+    'not_found_in_trash' => __( 'Not Found', 'wpeasy' ),
+    'parent' => __( 'Not Parent', 'wpeasy' )
+	);
+
+	$args = array(
+		'label' => __( 'Services', 'wpeasy' ),
+		'labels' => $labels,
+		'description' => '',
+		'public' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'delete_with_user' => false,
+		'show_in_rest' => true,
+		'rest_base' => '',
+		'rest_controller_class' => 'WP_REST_Posts_Controller',
+		'has_archive' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'exclude_from_search' => false,
+		'capability_type' => 'post',
+		'map_meta_cap' => true,
+		'hierarchical' => false,
+		'query_var' => true,
+		'menu_position' => 5,
+    'menu_icon' => 'dashicons-admin-tools',
+    // https://developer.wordpress.org/resource/dashicons/
+    'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
+    'rewrite' => array( 'slug' => 'service', 'with_front' => false ),
+	);
+
+	register_post_type( 'services', $args );
+}
+
 ?>
