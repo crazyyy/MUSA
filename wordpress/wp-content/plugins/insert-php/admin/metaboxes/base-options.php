@@ -412,7 +412,7 @@ class WINP_BaseOptionsMetaBox extends Wbcr_FactoryMetaboxes409_FormMetabox {
 		if ( ! empty( $post ) && $post->post_type == WINP_SNIPPETS_POST_TYPE ) {
 			$snippet_type = WINP_Helper::get_snippet_type();
 
-			$new_classes = "wbcr-inp-snippet-type-" . $snippet_type;
+			$new_classes = "wbcr-inp-snippet-type-" . esc_attr( $snippet_type );
 
 			if ( $snippet_type !== WINP_SNIPPET_TYPE_TEXT ) {
 				$new_classes .= " winp-snippet-enabled";

@@ -2062,7 +2062,7 @@ article {
 
     &:before {
       position: absolute;
-      top: 75px;
+      top: 38px;
       right: -15px;
 
       content: '';
@@ -2548,6 +2548,360 @@ article {
     }
   }
 }
+
+.container--contact__top,
+.container--contact__middle,
+.container--contact__bottom {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.contactus--subcont {
+  .contactus--title {
+    margin-bottom: 40px;
+
+    color: $gray-dark;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.38;
+  }
+
+  .contactus--item {
+    position: relative;
+
+    margin-bottom: 40px;
+    padding-top: 70px;
+
+    font-size: 15px;
+    font-weight: 300;
+
+    &:before,
+    &:after {
+      position: absolute;
+
+      @extend .dblock;
+    }
+
+    &:before {
+      top: 0;
+      left: 15px;
+
+      width: 54px;
+      height: 54px;
+
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    &:after {
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .contactus--heading {
+      color: $gray-dark;
+
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.18;
+    }
+
+    p {
+      margin-bottom: 6px;
+
+      color: #262028;
+
+      line-height: 1.47;
+    }
+
+    a {
+      color: $gray-dark;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .contactus--adress {
+    &:after {
+      top: 18px;
+      left: 35px;
+
+      width: 14px;
+      height: 20px;
+
+      background-image: url(../img/ico/contactus-adress.png#contactus);
+    }
+  }
+
+  .contactus--phones {
+    &:after {
+      top: 17px;
+      left: 32px;
+
+      width: 20px;
+      height: 20px;
+
+      background-image: url(../img/ico/contactus-phone.png#contactus);
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    a {
+      margin-right: 10px;
+
+      color: #262028;
+
+    }
+
+    span {
+      text-transform: uppercase;
+
+      color: $gray;
+
+      font-size: 14px;
+    }
+
+  }
+
+  .contactus--emails {
+    &:after {
+      top: 20px;
+      left: 33px;
+
+      width: 18px;
+      height: 14px;
+
+      background-image: url(../img/ico/contactus-mail.png#contactus);
+    }
+  }
+
+  .contactus--worktime {
+    &:after {
+      top: 17px;
+      left: 32px;
+
+      width: 20px;
+      height: 20px;
+
+      background-image: url(../img/ico/contactus-clock.png#contactus);
+    }
+  }
+}
+
+.contactus--map {
+  // background-color: orange;
+  img {
+    max-width: inherit !important;
+  }
+}
+
+.contactus--subtitle {
+  margin-bottom: 50px;
+
+  color: $gray-dark;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.38;
+}
+
+.contactus--representative {
+  .representative--placed {
+    position: relative;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    margin-bottom: 20px;
+
+    text-transform: capitalize;
+
+    color: $gray-dark;
+
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.29;
+
+    &:after {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      @extend .dblock;
+    }
+
+  }
+
+  .representative--img {
+    display: flex;
+    overflow: hidden;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+    margin-right: 10px;
+
+    border-radius: 50%;
+    background-color: $blue-gray;
+  }
+
+  .representative--placed__usa {
+    &:after {
+      background-image: url(../img/flags/us.png);
+    }
+  }
+
+  .representative--placed__germany {
+    &:after {
+      background-image: url(../img/flags/de.png);
+    }
+  }
+
+  .representative--placed__ukraine {
+    &:after {
+      background-image: url(../img/flags/ua.png);
+    }
+  }
+
+  .representative--placed__gb {
+    &:after {
+      background-image: url(../img/flags/gb.png);
+    }
+  }
+
+  .representative--placed__bottom {
+    display: block;
+
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .representative--named,
+  .representative--phone,
+  .representative--adress,
+  .representative--email,
+  .representative--languages {
+    position: relative;
+
+    margin-bottom: 16px;
+    padding-left: 60px;
+
+    color: #262028;
+
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.47;
+
+    a {
+      text-decoration: none;
+
+      color: #262028;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      left: 20px;
+
+      width: 16px;
+      height: 16px;
+
+      transform: translateY(-50%);
+
+      @extend .dblock;
+    }
+  }
+
+  .representative--named {
+    &:before {
+      width: 14px;
+      height: 18px;
+
+      background-image: url(../img/ico/contactus-bot__user.png#contactus);
+    }
+  }
+
+  .representative--phone {
+    &:before {
+      width: 16px;
+      height: 16px;
+
+      background-image: url(../img/ico/contactus-bot__phone.png#contactus);
+    }
+
+    a {
+      margin-right: 10px;
+
+      >span {
+        font-weight: 700;
+      }
+    }
+
+    >span {
+      text-transform: uppercase;
+
+      color: $gray;
+
+      font-size: 14px;
+    }
+  }
+
+  .representative--adress {
+    &:before {
+      width: 12px;
+      height: 18px;
+
+      background-image: url(../img/ico/contactus-bot__map.png#contactus);
+    }
+
+  }
+
+  .representative--email {
+    &:before {
+      width: 18px;
+      height: 18px;
+
+      background-image: url(../img/ico/contactus-bot__mail.png#contactus);
+    }
+
+  }
+
+  .representative--languages {
+    text-transform: uppercase;
+    &:before {
+      width: 18px;
+      height: 18px;
+
+      background-image: url(../img/ico/contactus-bot__lang.png#contactus);
+    }
+  }
+
+  &.contactus--office {}
+
+  &.contactus--agents {}
+}
+
 
 footer {
   height: auto;

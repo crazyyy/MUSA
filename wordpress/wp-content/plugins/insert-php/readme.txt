@@ -212,6 +212,10 @@ We will definitely add multisite support in the future. You can speed up this pr
 6. Adding a snippet shortcode to a text widget
 
 == Changelog ==
+= 2.2.9 (16.09.2019) =
+* Fixed: Due to a problem with WPML, we were forced to cancel the added WPML compatibility in the previous version.
+* Fixed: Security issue
+
 = 2.2.8 (13.09.2019) =
 * Added: Compatibility with WPML proposed in the support [forum](https://wpml.org/forums/topic/header-and-foster-scripts-translation/)
 * Fixed: Security issue

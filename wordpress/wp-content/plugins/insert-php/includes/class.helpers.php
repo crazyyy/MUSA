@@ -186,7 +186,7 @@ class WINP_Helper {
 
 		$_post = $post;
 
-		$snippet_type = WINP_Plugin::app()->request->get( 'winp_item', WINP_SNIPPET_TYPE_PHP, true );
+		$snippet_type = WINP_Plugin::app()->request->get( 'winp_item', WINP_SNIPPET_TYPE_PHP, 'sanitize_key' );
 		$get_post     = WINP_Plugin::app()->request->get( 'post', '' );
 
 		if ( empty( $post_id ) && ! empty( $get_post ) && ! is_array( $get_post ) ) {
