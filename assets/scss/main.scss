@@ -2694,6 +2694,7 @@ article {
 }
 
 .contactus--map {
+
   // background-color: orange;
   img {
     max-width: inherit !important;
@@ -2889,6 +2890,7 @@ article {
 
   .representative--languages {
     text-transform: uppercase;
+
     &:before {
       width: 18px;
       height: 18px;
@@ -2896,11 +2898,127 @@ article {
       background-image: url(../img/ico/contactus-bot__lang.png#contactus);
     }
   }
-
-  &.contactus--office {}
-
-  &.contactus--agents {}
 }
+
+.cost--exchange {
+  position: relative;
+
+  margin-bottom: 60px;
+  padding: 20px 35px;
+
+  color: $gray-dark;
+
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.73;
+
+  &:before {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 15px;
+    bottom: 0;
+    left: 15px;
+
+    border: 1px solid $gray-light;
+    background-color: #f7f7f7;
+
+    @extend .dblock;
+  }
+
+  h6 {
+    margin-bottom: 14px;
+
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+div.cost--category {
+  padding-right: 0;
+  padding-left: 0;
+
+  h4.cost--title {
+    margin-bottom: 30px;
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  div.cost--item {
+    position: relative;
+
+    margin-bottom: 60px;
+    padding-top: 110px;
+
+    &:before,
+    &:after {
+      position: absolute;
+      top: 0;
+
+      border-radius: 50%;
+    }
+
+    &:before {
+      left: 15px;
+
+      width: 90px;
+      height: 90px;
+
+      border: 2px solid transparent;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      @extend .dblock;
+
+    }
+
+    &:after {
+      left: 78px;
+
+      width: 22px;
+      height: 22px;
+
+      text-align: center;
+
+      color: #fff;
+      background-color: #00acc1;
+
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.71;
+    }
+
+    h5 {
+      margin-bottom: 20px;
+
+      color: $gray-dark;
+
+      font-size: $base-font-size;
+      font-weight: 700;
+      line-height: 1.38;
+    }
+
+    p {
+      color: $gray-dark;
+
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.33;
+
+      span {
+        font-size: $base-font-size;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
 
 
 footer {

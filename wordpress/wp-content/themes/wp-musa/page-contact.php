@@ -29,28 +29,40 @@
               <div class="row">
 
                 <h4 class="contactus--title col-12">General office</h4>
-                <div class="contactus--item contactus--adress col-6">
-                  <h6 class="contactus--heading">Adress</h6>
-                  <p>21050, Ukraine, Vinnitsa city, Magistratskaya street 64</p>
-                </div>
-                <div class="contactus--item contactus--phones col-6">
-                  <h6 class="contactus--heading">Phones</h6>
-                  <ul>
-                    <li><a href="tel:+38 (098) 050-50-37">+38 (098) 050-50-37</a>  <span>ENG, UKR</span></li>
-                    <li><a href="tel:+38 (098) 050-50-37">+38 (098) 050-50-37</a><span>ENG, UKR</span></li>
-                    <li><a href="tel:+38 (098) 050-50-37">+38 (098) 050-50-37</a><span>ENG, UKR</span></li>
-                  </ul>
-                </div>
 
-                <div class="contactus--item contactus--emails col-6">
-                  <h6 class="contactus--heading">E-mail adress</h6>
-                  <a href="mailto:office@musa.in.ua">office@musa.in.ua</a>
-                </div>
-                <div class="contactus--item contactus--worktime col-6">
-                  <h6 class="contactus--heading">Working time</h6>
-                  <p>Weekdays - from 09:00 to 19:00</p>
-                  <p>Saturday - from 13:00 to 15:00</p>
-                </div>
+                <?php if ( get_field('main_office_adress') ) : ?>
+                  <div class="contactus--item contactus--adress col-6">
+                    <h6 class="contactus--heading">Adress</h6>
+                    <?php the_field('main_office_adress'); ?>
+                  </div>
+                <?php endif; ?>
+
+                <?php if ( have_rows('main_office_phones') ) : ?>
+                  <div class="contactus--item contactus--phones col-6">
+                    <h6 class="contactus--heading">Phones</h6>
+                    <ul>
+                      <?php while( have_rows('main_office_phones') ) : the_row(); ?>
+                        <li><a href="tel:<?php the_sub_field('phone_number'); ?>"><?php the_sub_field('phone_number'); ?></a>  <span><?php the_sub_field('language'); ?></span></li>
+                      <?php endwhile; ?>
+                    </ul>
+                  </div>
+                <?php endif; ?>
+
+                <?php if ( have_rows('main_office_emails') ) : ?>
+                  <div class="contactus--item contactus--emails col-6">
+                    <h6 class="contactus--heading">E-mail adress</h6>
+                    <?php while( have_rows('main_office_emails') ) : the_row(); ?>
+                      <a href="mailto:<?php the_sub_field('email'); ?>"><?php the_sub_field('email'); ?></a>
+                    <?php endwhile; ?>
+                  </div>
+                <?php endif; ?>
+
+                <?php if ( get_field('main_office_working_time') ) : ?>
+                  <div class="contactus--item contactus--worktime col-6">
+                    <h6 class="contactus--heading">Working time</h6>
+                    <?php the_field('main_office_working_time'); ?>
+                  </div>
+                <?php endif; ?>
 
               </div>
               <!-- /.row -->
@@ -111,20 +123,6 @@
 
         <h5 class="contactus--subtitle col-12">Agents</h5>
 
-
-
-            <?php if ( get_sub_field('photo') ) : $image = get_sub_field('photo'); ?>
-            <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>"/>
-          <?php endif; ?>
-
-            <?php the_sub_field('country'); ?>
-            <?php the_sub_field('city'); ?>
-            <?php the_sub_field('name'); ?>
-            <?php the_sub_field('phone'); ?>
-            <?php the_sub_field('languages'); ?>
-            <?php the_sub_field('email'); ?>
-
-
         <?php if ( have_rows('agents') ) : ?>
           <?php while( have_rows('agents') ) : the_row(); ?>
 
@@ -139,7 +137,6 @@
                     <span class="representative--placed__bottom"><?php the_sub_field('name'); ?></span>
                   <?php endif; ?>
                 </span>
-
               </h6>
 
               <?php if ( get_sub_field('phone') ) : ?>
@@ -168,8 +165,6 @@
 
           <?php endwhile; ?>
         <?php endif; ?>
-
-
 
       <?php endwhile; endif; ?>
     </div>
