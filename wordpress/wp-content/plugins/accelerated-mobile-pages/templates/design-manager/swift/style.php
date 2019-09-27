@@ -202,7 +202,7 @@ if ( $ampforwp_font_icon == 'fontawesome-icons' ){ ?>
 <?php } ?>
 	line-height: 0;display: block;text-indent: 1px;
 <?php if($redux_builder_amp['swift-element-overlay-color-control'] ['rgba']){?>color: <?php echo ampforwp_sanitize_color($redux_builder_amp['swift-element-overlay-color-control']['rgba'])?>;<?php } ?> }
-.lb-t:target {opacity: 1;top: 0;bottom: 0;left:0;z-index:1;}
+.lb-t:target {opacity: 1;top: 0;bottom: 0;left:0;z-index:2;}
 .lb-t:target img {max-height: 100%;max-width: 100%;}
 .lb-t:target a.lb-x {top: 25px;}
 .lb img{cursor:pointer;}
@@ -559,7 +559,7 @@ table {
     overflow-x: auto;
     word-break: normal;
 }
-.artl-cnt table{ margin: 0 auto; text-align: center; width: 100%; display: inline-block; } .artl-cnt table tbody{ display: inline-block; }
+.artl-cnt table{ margin: 0 auto; text-align: center; width: 100%; display: inline-table; }
 p.nocomments {padding: 10px;color: #fff;}
 <?php if($redux_builder_amp['single-new-features'] && $redux_builder_amp['ampforwp-underline-content-links']){ ?> 
 .artl-cnt a{

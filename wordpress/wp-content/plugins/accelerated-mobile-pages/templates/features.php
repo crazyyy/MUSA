@@ -4671,10 +4671,11 @@ function ampforwp_add_related_post_after_paragraph($matches)
 // Add extra key=>value pair into the attachment array
 add_filter('amp_gallery_image_params','ampforwp_gallery_new_params', 10, 2);
 function ampforwp_gallery_new_params($urls, $attachment_id ){
-	$img_caption = $urls['caption'];
-	$new_urls = array();
-	$captext = '';
-	$caption = array();
+	$img_caption = $captext = '';
+	$new_urls 	 = $caption = array();
+	if(isset($urls['caption']) && $urls['caption'] ){
+		$img_caption = $urls['caption'];
+	}
 	$captext = $img_caption;
 	if($captext==""){
 		$captext = get_post( $attachment_id)->post_excerpt;
@@ -5747,14 +5748,23 @@ function ampforwp_coauthors_links($args){
 //remove anchor from the image when lightbox option is enabled #2695
 add_action('pre_amp_render_post','ampforwp_remove_ahref_lightbox');
 function ampforwp_remove_ahref_lightbox(){	
-	if(true == ampforwp_get_setting('ampforwp-amp-img-lightbox') && true == ampforwp_get_setting('ampforwp-lightbox-external-links')){
+	if(true == ampforwp_get_setting('ampforwp-amp-img-lightbox') ){
 		add_filter( 'the_content', 'ampforwp_remove_ahref_lightbox_in_amp' );
 		add_filter('tablepress_table_render_data','amforwp_remove_tp_image_href');
 	}
 }
 function ampforwp_remove_ahref_lightbox_in_amp( $content ) {
-	$updated_content = preg_replace("/<a[^>]+\>(<img[^>]+\>)<\/a>/i", '$1', $content);
-	return $updated_content;
+	preg_match_all('/(<a(.*?)href=\"(.*?)\">(.*?)<img(.*?)src=\"(.*?)\"(.*?)\/>)/', $content, $matches);
+	if( count($matches[3])){
+		for( $i=0;$i<count($matches[3]);$i++){
+			if($matches[3][$i] == $matches[6][$i]){
+				$href = $matches[3][$i];
+				$href_src = str_replace( '/', '\/', $href );
+				$content = preg_replace('/<a(.*?)href=\"'.$href_src.'\"(.*?)>(<img(.*?)src=\"'.$href_src.'\"(.*?)\/>)<\/a>/i', '$3', $content);	
+			}
+		}
+	}
+	return $content;
 }
 function amforwp_remove_tp_image_href( $orig_table){
 	$tablepressData = array();
@@ -6200,9 +6210,9 @@ function ampforwp_thrive_architect_content(){
     if ( function_exists( 'ampforwp_is_amp_inURL' ) && ampforwp_is_amp_inURL($url_path)  ) {
 		//#3254 Remove action for Woodmart theme lazyload feature 
 		remove_action( 'init', 'woodmart_lazy_loading_init', 120 );
-	}
-	if( class_exists('CDN_Enabler')){
-		add_filter('option_cdn_enabler', 'ampforwp_add_exclusions_cdn_enabler');
+		if( class_exists('CDN_Enabler')){
+			add_filter('option_cdn_enabler', 'ampforwp_add_exclusions_cdn_enabler');
+		}
 	}
 }
 

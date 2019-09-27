@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WordPress - 5.2.x - Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-09-05 07:35:28+0000\n"
+"PO-Revision-Date: 2019-09-17 20:55:48+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1252,7 +1252,7 @@ msgstr "Вставити додаткові користувальницькі �
 #: wp-includes/js/dist/block-library.js:8163
 #: wp-includes/js/dist/block-library.js:8217
 msgid "Shortcode"
-msgstr "Шорткод"
+msgstr "Короткий код"
 
 #: wp-includes/js/dist/block-library.js:8101
 msgid "Dots"
@@ -4608,7 +4608,7 @@ msgstr "В'єтнамський"
 
 #: wp-includes/script-loader.php:1279
 msgid "Ukrainian"
-msgstr "Український"
+msgstr "Українська"
 
 #: wp-includes/script-loader.php:1278
 msgid "Turkish"

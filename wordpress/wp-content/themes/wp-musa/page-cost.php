@@ -40,8 +40,6 @@
                           <!-- /.cost--item col-4 -->
                         <?php $i++; endwhile; ?>
                       <?php endif; ?>
-
-
                     </div>
                     <!-- /.row -->
                   </div>
