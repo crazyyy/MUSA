@@ -29,10 +29,8 @@
   ]
   var length = methods.length
   var console = (window.console = window.console || {})
-
   while (length--) {
     method = methods[length]
-
     // Only stub undefined methods.
     if (!console[method]) {
       console[method] = noop
@@ -45,7 +43,6 @@ if (typeof jQuery === "undefined") {
   console.log("jQuery " + jQuery.fn.jquery + " has loaded")
 }
 // Place any jQuery/helper plugins in here.
-
 // (function(){
 //   $('.header--lang select').selectric({
 //     optionsItemBuilder: function(itemData, element, index) {
@@ -53,6 +50,32 @@ if (typeof jQuery === "undefined") {
 //     }
 //   });
 // })()
+var UID = {
+	_current: 0,
+	getNew: function(){
+		this._current++;
+		return this._current;
+	}
+};
+HTMLElement.prototype.pseudoStyle = function(element,prop,value){
+	var _this = this;
+	var _sheetId = "pseudoStyles";
+	var _head = document.head || document.getElementsByTagName('head')[0];
+	var _sheet = document.getElementById(_sheetId) || document.createElement('style');
+	_sheet.id = _sheetId;
+	var className = "pseudoStyle" + UID.getNew();
+
+	_this.className +=  " "+className;
+  if (prop == 'content') {
+    _sheet.innerHTML += "\n."+className+":"+element+"{"+prop+" : '" + value + "' !important}";
+  } else {
+    _sheet.innerHTML += "\n."+className+":"+element+"{"+prop+" : "+value+"}";
+  }
+
+  console.log(_sheet.innerHTML)
+	_head.appendChild(_sheet);
+	return this;
+};
 
 (function () {
   let articleSliderCarousel = $('.article-slider--carousel');
@@ -70,7 +93,6 @@ if (typeof jQuery === "undefined") {
       autoplayHoverPause: true
     });
   }
-
   let relativecitiesCarousel = $('.relativecities--carousel');
   if (relativecitiesCarousel) {
     relativecitiesCarousel.owlCarousel({
@@ -86,7 +108,6 @@ if (typeof jQuery === "undefined") {
       autoplayHoverPause: true
     });
   }
-
   let toprankCarousel = $('.toprank--carousel');
   if (toprankCarousel) {
     toprankCarousel.owlCarousel({
@@ -102,7 +123,6 @@ if (typeof jQuery === "undefined") {
       autoplayHoverPause: true
     });
   }
-
   let $pagecontractTabs = $('.pagecontract-tabs');
   if ($pagecontractTabs) {
     let $pagecontractTablinks = $pagecontractTabs.find('.pagecontract--tablinks');
@@ -123,15 +143,48 @@ if (typeof jQuery === "undefined") {
       } else {
         return;
       }
-
     })
   }
 
-})();
+  $('.searchform--tab').on('click', function(e){
+    e.preventDefault();
+    if (!$(this).hasClass('searchform--tab__active')) {
+      let next_id = $(this).data('id');
+      $('.searchform--content__active').removeClass('searchform--content__active')
+      $(next_id).addClass('searchform--content__active');
+      $('.searchform--tab__active').removeClass('searchform--tab__active')
+      $(this).addClass('searchform--tab__active')
+    }
+  })
 
+  $('.header--nav .headnav > li').hover(
+    function() {
+      let subNav = $(this).children('.sub-menu');
+      if (subNav.length > 0) {
+        $('.header--dark').addClass('header--dark--hovered')
+      }
+    }, function() {
+      $('.header--dark').removeClass('header--dark--hovered')
+    }
+  )
+
+  $('body.home .howtoproceed-title').text('How to become student')
+})();
 $(document).ready(function () {
   autoPlayYouTubeModal();
+
+  $('.custom-file-upload input[type="file"]').change(function(event) {
+    let i = $('.custom-file-upload').clone();
+    let file = $(this)[0].files[0].name;
+    console.log(file)
+    // $('.custom-file-upload').text(file);
+    var label = document.getElementsByClassName("custom-file-upload")[0];
+    label.pseudoStyle("before", "content", file);
+    $('.custom-file-upload').addClass('custom-file-upload__filename')
+  });
 });
+
+
 
 function autoPlayYouTubeModal() {
   var trigger = $('.yt-play');
@@ -147,10 +200,7 @@ function autoPlayYouTubeModal() {
     });
   });
 };
-
-
 (function ($) {
-
   /*
    *  new_map
    *
@@ -163,46 +213,28 @@ function autoPlayYouTubeModal() {
    *  @param	$el (jQuery element)
    *  @return	n/a
    */
-
   function new_map($el) {
-
     // var
     var $markers = $el.find('.marker');
-
-
     // vars
     var args = {
       zoom: 16,
       center: new google.maps.LatLng(0, 0),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
-
     // create map
     var map = new google.maps.Map($el[0], args);
-
-
     // add a markers reference
     map.markers = [];
-
-
     // add markers
     $markers.each(function () {
-
       add_marker($(this), map);
-
     });
-
-
     // center map
     center_map(map);
-
-
     // return
     return map;
-
   }
-
   /*
    *  add_marker
    *
@@ -216,38 +248,28 @@ function autoPlayYouTubeModal() {
    *  @param	map (Google Map object)
    *  @return	n/a
    */
-
   function add_marker($marker, map) {
-
     // var
     var latlng = new google.maps.LatLng($marker.attr('data-lat'), $marker.attr('data-lng'));
-
     // create marker
     var marker = new google.maps.Marker({
       position: latlng,
       map: map
     });
-
     // add to array
     map.markers.push(marker);
-
     // if marker contains HTML, add it to an infoWindow
     if ($marker.html()) {
       // create info window
       var infowindow = new google.maps.InfoWindow({
         content: $marker.html()
       });
-
       // show info window when marker is clicked
       google.maps.event.addListener(marker, 'click', function () {
-
         infowindow.open(map, marker);
-
       });
     }
-
   }
-
   /*
    *  center_map
    *
@@ -260,21 +282,14 @@ function autoPlayYouTubeModal() {
    *  @param	map (Google Map object)
    *  @return	n/a
    */
-
   function center_map(map) {
-
     // vars
     var bounds = new google.maps.LatLngBounds();
-
     // loop through all markers and create bounds
     $.each(map.markers, function (i, marker) {
-
       var latlng = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
-
       bounds.extend(latlng);
-
     });
-
     // only 1 marker?
     if (map.markers.length == 1) {
       // set center of map
@@ -284,9 +299,7 @@ function autoPlayYouTubeModal() {
       // fit to bounds
       map.fitBounds(bounds);
     }
-
   }
-
   /*
    *  document ready
    *
@@ -301,16 +314,10 @@ function autoPlayYouTubeModal() {
    */
   // global var
   var map = null;
-
   $(document).ready(function () {
-
     $('.contactus--map').each(function () {
-
       // create map
       map = new_map($(this));
-
     });
-
   });
-
 })(jQuery);

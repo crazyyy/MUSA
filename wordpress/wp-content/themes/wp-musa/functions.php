@@ -288,8 +288,8 @@ function html5wp_pagination() {
       'base' => str_replace($big, '%#%', get_pagenum_link($big)),
       'format' => '?paged=%#%',
       'current' => max(1, get_query_var('paged')),
-      'prev_text' => __('« Previous'),
-      'next_text' => __('Next »'),
+      'prev_text' => __('Previous'),
+      'next_text' => __('Next'),
       'total' => $wp_query->max_num_pages
     )
   );
@@ -730,6 +730,236 @@ function register_cpts_university() {
 	);
 
 	register_post_type( 'university', $args );
+}
+
+add_action( 'init', 'register_taxes_areas' );
+function register_taxes_areas() {
+	/**
+	 * Taxonomy: Areas
+	*/
+
+  $labels = array(
+		'name' => __( 'Areas', 'wpeasy' ),
+    'singular_name' => __( 'Area', 'wpeasy' ),
+    'menu_name' => __( 'Areas', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'all_items' => __( 'All', 'wpeasy' ),
+    'parent_item' => __( 'Parent', 'wpeasy' ),
+    'parent_item_colon' => __( 'Parent', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'update_item' => __( 'Update', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'new_item_name' => __( 'New', 'wpeasy' ),
+    'popular_items' => __( 'Popular', 'wpeasy' ),
+    'separate_items_with_commas' => __( 'Separate items with comas', 'wpeasy' ),
+    'add_or_remove_items' => __( 'Add or remove', 'wpeasy' ),
+    'choose_from_most_used' => __( 'Choose from the most used', 'wpeasy' ),
+    'not_found' => __( 'No found', 'wpeasy' ),
+	);
+
+	$args = array(
+		'label' => __( 'Area', 'wpeasy' ),
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'hierarchical' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'query_var' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_quick_edit' => false,
+    'rest_base' => 'area',
+    'rewrite' => array( 'slug' => 'area', 'with_front' => true, ),
+		);
+	register_taxonomy( 'area', array( 'university' ), $args );
+}
+
+add_action( 'init', 'register_taxes_levels' );
+function register_taxes_levels() {
+	/**
+	 * Taxonomy: Level
+	*/
+
+  $labels = array(
+		'name' => __( 'Levels', 'wpeasy' ),
+    'singular_name' => __( 'Level', 'wpeasy' ),
+    'menu_name' => __( 'Levels', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'all_items' => __( 'All', 'wpeasy' ),
+    'parent_item' => __( 'Parent', 'wpeasy' ),
+    'parent_item_colon' => __( 'Parent', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'update_item' => __( 'Update', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'new_item_name' => __( 'New', 'wpeasy' ),
+    'popular_items' => __( 'Popular', 'wpeasy' ),
+    'separate_items_with_commas' => __( 'Separate items with comas', 'wpeasy' ),
+    'add_or_remove_items' => __( 'Add or remove', 'wpeasy' ),
+    'choose_from_most_used' => __( 'Choose from the most used', 'wpeasy' ),
+    'not_found' => __( 'No found', 'wpeasy' ),
+	);
+
+	$args = array(
+		'label' => __( 'Level', 'wpeasy' ),
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'hierarchical' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'query_var' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_quick_edit' => false,
+    'rest_base' => 'level',
+    'rewrite' => array( 'slug' => 'level', 'with_front' => true, ),
+		);
+	register_taxonomy( 'level', array( 'university' ), $args );
+}
+
+add_action( 'init', 'register_taxes_regions' );
+function register_taxes_regions() {
+	/**
+	 * Taxonomy: Regions
+	*/
+
+  $labels = array(
+		'name' => __( 'Regions', 'wpeasy' ),
+    'singular_name' => __( 'Region', 'wpeasy' ),
+    'menu_name' => __( 'Regions', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'all_items' => __( 'All', 'wpeasy' ),
+    'parent_item' => __( 'Parent', 'wpeasy' ),
+    'parent_item_colon' => __( 'Parent', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'update_item' => __( 'Update', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'new_item_name' => __( 'New', 'wpeasy' ),
+    'popular_items' => __( 'Popular', 'wpeasy' ),
+    'separate_items_with_commas' => __( 'Separate items with comas', 'wpeasy' ),
+    'add_or_remove_items' => __( 'Add or remove', 'wpeasy' ),
+    'choose_from_most_used' => __( 'Choose from the most used', 'wpeasy' ),
+    'not_found' => __( 'No found', 'wpeasy' ),
+	);
+
+	$args = array(
+		'label' => __( 'Regions', 'wpeasy' ),
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'hierarchical' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'query_var' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_quick_edit' => false,
+    'rest_base' => 'region',
+    'rewrite' => array( 'slug' => 'region', 'with_front' => true, ),
+		);
+	register_taxonomy( 'region', array( 'university' ), $args );
+}
+
+add_action( 'init', 'register_taxes_types' );
+function register_taxes_types() {
+	/**
+	 * Taxonomy: Type
+	*/
+
+  $labels = array(
+		'name' => __( 'Types', 'wpeasy' ),
+    'singular_name' => __( 'Type', 'wpeasy' ),
+    'menu_name' => __( 'Types', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'all_items' => __( 'All', 'wpeasy' ),
+    'parent_item' => __( 'Parent', 'wpeasy' ),
+    'parent_item_colon' => __( 'Parent', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'update_item' => __( 'Update', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'new_item_name' => __( 'New', 'wpeasy' ),
+    'popular_items' => __( 'Popular', 'wpeasy' ),
+    'separate_items_with_commas' => __( 'Separate items with comas', 'wpeasy' ),
+    'add_or_remove_items' => __( 'Add or remove', 'wpeasy' ),
+    'choose_from_most_used' => __( 'Choose from the most used', 'wpeasy' ),
+    'not_found' => __( 'No found', 'wpeasy' ),
+	);
+
+	$args = array(
+		'label' => __( 'Type', 'wpeasy' ),
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'hierarchical' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'query_var' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_quick_edit' => false,
+    'rest_base' => 'types',
+    'rewrite' => array( 'slug' => 'types', 'with_front' => true, ),
+		);
+	register_taxonomy( 'types', array( 'university' ), $args );
+}
+
+add_action( 'init', 'register_taxes_language' );
+function register_taxes_language() {
+	/**
+	 * Taxonomy: Language
+	*/
+
+  $labels = array(
+		'name' => __( 'Languages', 'wpeasy' ),
+    'singular_name' => __( 'Language', 'wpeasy' ),
+    'menu_name' => __( 'Language', 'wpeasy' ),
+    'search_items' => __( 'Search', 'wpeasy' ),
+    'all_items' => __( 'All', 'wpeasy' ),
+    'parent_item' => __( 'Parent', 'wpeasy' ),
+    'parent_item_colon' => __( 'Parent', 'wpeasy' ),
+    'edit_item' => __( 'Edit', 'wpeasy' ),
+    'update_item' => __( 'Update', 'wpeasy' ),
+    'add_new_item' => __( 'Add', 'wpeasy' ),
+    'new_item_name' => __( 'New', 'wpeasy' ),
+    'popular_items' => __( 'Popular', 'wpeasy' ),
+    'separate_items_with_commas' => __( 'Separate items with comas', 'wpeasy' ),
+    'add_or_remove_items' => __( 'Add or remove', 'wpeasy' ),
+    'choose_from_most_used' => __( 'Choose from the most used', 'wpeasy' ),
+    'not_found' => __( 'No found', 'wpeasy' ),
+	);
+
+	$args = array(
+		'label' => __( 'Language', 'wpeasy' ),
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'hierarchical' => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'show_in_nav_menus' => true,
+		'query_var' => true,
+		'show_admin_column' => true,
+		'show_in_rest' => true,
+		'update_count_callback' => '_update_post_term_count',
+		'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_quick_edit' => false,
+    'rest_base' => 'language',
+    'rewrite' => array( 'slug' => 'language', 'with_front' => true, ),
+		);
+	register_taxonomy( 'language', array( 'university' ), $args );
 }
 
 add_action( 'init', 'register_cpts_city' );

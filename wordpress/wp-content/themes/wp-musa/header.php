@@ -76,7 +76,7 @@
       <div class="row">
         <div class="container">
           <div class="row">
-            <nav class="header--nav col-xl-9 col-lg-9 col-md-9 col-sm-9" role="navigation">
+            <nav class="header--nav" role="navigation">
               <?php wpeHeadNav(); ?>
             </nav><!-- /header--nav -->
 
@@ -89,7 +89,6 @@
         </div>
         <!-- /.container -->
       </div>
-
     </div><!-- /.container -->
   </header><!-- /header -->
 
