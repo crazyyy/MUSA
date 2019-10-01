@@ -72,7 +72,6 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
     _sheet.innerHTML += "\n." + className + ":" + element + "{" + prop + " : " + value + "}";
   }
 
-  console.log(_sheet.innerHTML)
   _head.appendChild(_sheet);
   return this;
 };
@@ -170,6 +169,27 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
   )
 
   $('body.home .howtoproceed-title').text('How to become student')
+
+  let wpml_language = $('body').attr('data-lang')
+  SetLanguageIcoNav(wpml_language);
+
+  $('#options .option').on('click', function(e){
+    let shwitch_to_language = e.currentTarget.dataset.lang;
+    $(document.body).css({'cursor' : 'wait'});
+    SetLanguageIcoNav(shwitch_to_language)
+    window.location.replace('?lang=' + shwitch_to_language);
+  })
+
+  function SetLanguageIcoNav(language) {
+    if (!language.length > 0) {return false}
+    let $current_option = $('.option[data-lang="'+ language +'"]');
+    let $current_ico_clone = $current_option.find('.ico').clone();
+    let $current_label_clone = $current_option.find('.label').clone();
+    let $selected_value_container = $('#selected-value');
+    $selected_value_container.html($current_ico_clone).append($current_label_clone);
+    $current_option.hide()
+  }
+
 })();
 $(document).ready(function () {
   autoPlayYouTubeModal();

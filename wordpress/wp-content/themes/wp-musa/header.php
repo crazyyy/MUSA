@@ -23,7 +23,7 @@
   <![endif]-->
 
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class(); ?> data-lang="<?php echo apply_filters( 'wpml_current_language', NULL );  ?>">
 <!-- wrapper -->
 <div class="wrapper">
   <header role="banner">
@@ -57,6 +57,9 @@
 
         <div class="header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2">
           <div id="select-box">
+            <!-- ?lang=en -->
+            <!-- ?lang=ua -->
+            <!-- ?lang=ru -->
             <input type="checkbox" id="options-view-button">
             <div id="select-button" class="brd">
               <div id="selected-value">
@@ -67,24 +70,24 @@
               </div>
             </div>
             <div id="options">
-              <div class="option">
+              <div class="option" data-lang="en">
                 <input class="s-c top" type="radio" name="platform" value="eng">
                 <input class="s-c bottom" type="radio" name="platform" value="eng">
-                <i class="i ico ico-eng"></i>
+                <i class="ico ico-eng"></i>
                 <span class="label">Eng</span>
                 <span class="opt-val">Eng</span>
               </div>
-              <div class="option">
+              <div class="option" data-lang="uk">
                 <input class="s-c top" type="radio" name="platform" value="ukr">
                 <input class="s-c bottom" type="radio" name="platform" value="ukr">
-                <i class="i ico ico-ukr"></i>
+                <i class="ico ico-ukr"></i>
                 <span class="label">Ukr</span>
                 <span class="opt-val">Ukr</span>
               </div>
-              <div class="option">
+              <div class="option" data-lang="ru">
                 <input class="s-c top" type="radio" name="platform" value="rus">
                 <input class="s-c bottom" type="radio" name="platform" value="rus">
-                <i class="i ico ico-rus"></i>
+                <i class="ico ico-rus"></i>
                 <span class="label">Rus</span>
                 <span class="opt-val">Rus</span>
               </div>

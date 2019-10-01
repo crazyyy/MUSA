@@ -608,9 +608,21 @@ nav {
     height: 29px;
     margin-right: 26px;
     padding-left: 15px;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     font-size: 12px;
     line-height: 2.1;
+    i {
+      margin-right: 10px;
+    }
+    .label {
+      padding: 0;
+      width: calc(100%-35px);
+    }
   }
 
   .option {
@@ -646,61 +658,9 @@ nav {
       width: 21px;
       height: 15px;
       margin-right: 0;
-      // display: none;
       margin-left: 13px;
-      // position: absolute;
-      // left: 13px;
       padding: 0;
     }
-
-    // input[type="radio"] {
-    //   &:checked {
-    //     ~ {
-    //       .opt-val {
-    //         transform: scale(1);
-
-    //         opacity: 1;
-    //       }
-
-    //       // i {
-    //       //   top: 0;
-    //       //   bottom: auto;
-
-    //       //   animation: unset;
-
-    //       //   opacity: 1;
-    //       //   color: #fff;
-    //       // }
-
-    //       .label {
-    //         color: #fff;
-
-    //         &:before {
-    //           position: absolute;
-    //           z-index: -1;
-    //           top: 0;
-    //           right: 0;
-    //           bottom: 0;
-    //           left: 0;
-
-    //           content: '';
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   // &:hover {
-    //   //   ~ {
-    //   //     #option-bg {
-    //   //       top: 0;
-
-    //   //       background-color: #f7f7f7;
-    //   //     }
-    //   //   }
-    //   // }
-    // }
-
-
     &:hover {
       .label {
         // color: red;
@@ -714,7 +674,6 @@ nav {
   }
 
   .label {
-    // display: none;
     display: block;
 
     width: calc(100%-44px);

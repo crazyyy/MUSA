@@ -1,0 +1,16 @@
+<wpml-config>
+  <custom-types>
+    <custom-type translate="1">wpcf7_contact_form</custom-type>
+    <custom-type translate="1">university</custom-type>
+    <custom-type translate="1">city</custom-type>
+    <custom-type translate="1">services</custom-type>
+    <custom-type translate="1">review</custom-type>
+  </custom-types>
+  <taxonomies>
+    <taxonomy translate="1">area</taxonomy>
+    <taxonomy translate="1">level</taxonomy>
+    <taxonomy translate="1">region</taxonomy>
+    <taxonomy translate="0">types</taxonomy>
+    <taxonomy translate="0">language</taxonomy>
+  </taxonomies>
+</wpml-config>

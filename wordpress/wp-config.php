@@ -8,6 +8,8 @@ define('DB_HOST', 'localhost');
 define('WP_DEBUG', false);
 define('WPCF7_AUTOP', false);
 
+define('WP_MEMORY_LIMIT', '256M');
+
 define('CACHE_READ_WHITELIST','_transient|posts WHERE ID IN|limit_login_'); // do not read from cache is sql contains these
 define('CACHE_WRITE_WHITELIST','_transient|limit_login_'); // do not reset cache if sql contains these
 

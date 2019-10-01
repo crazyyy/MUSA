@@ -488,7 +488,7 @@ function easy_breadcrumbs() {
             // Get post category info
             $category = get_the_category();
 
-            if(!empty($category)) {
+            if((!empty($category)) && ($post_type == 'post')) {
 
                 // Get last category post is in
                 $last_category = end(array_values($category));
