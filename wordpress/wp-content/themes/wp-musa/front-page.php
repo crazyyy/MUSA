@@ -5,6 +5,8 @@
       <div class="home-slider--container"></div>
       <!-- /.home-slider--container -->
       <div class="container home-slider--searchform">
+        <!-- // add vue seach https://premium.wpmudev.org/blog/creating-a-hybrid-single-page-app-wordpress-with-vuejs/
+        https://www.sitepoint.com/building-a-wordpress-plugin-with-vue/ -->
         <div class="row">
           <div class="searchform--tabs col-12">
             <button class="searchform--tab searchform--tab__active" data-id="#programs"><i></i>Programs</button>

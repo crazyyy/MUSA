@@ -56,11 +56,41 @@
         <!-- /.header--social col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
 
         <div class="header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2">
-          <select name="" id="">
-            <option value="eng">eng</option>
-            <option value="ukr">ukr</option>
-            <option value="rus">rus</option>
-          </select>
+          <div id="select-box">
+            <input type="checkbox" id="options-view-button">
+            <div id="select-button" class="brd">
+              <div id="selected-value">
+                <span>Language</span>
+              </div>
+              <div id="chevrons">
+                <i class="ico ico-arrow-down"></i>
+              </div>
+            </div>
+            <div id="options">
+              <div class="option">
+                <input class="s-c top" type="radio" name="platform" value="eng">
+                <input class="s-c bottom" type="radio" name="platform" value="eng">
+                <i class="i ico ico-eng"></i>
+                <span class="label">Eng</span>
+                <span class="opt-val">Eng</span>
+              </div>
+              <div class="option">
+                <input class="s-c top" type="radio" name="platform" value="ukr">
+                <input class="s-c bottom" type="radio" name="platform" value="ukr">
+                <i class="i ico ico-ukr"></i>
+                <span class="label">Ukr</span>
+                <span class="opt-val">Ukr</span>
+              </div>
+              <div class="option">
+                <input class="s-c top" type="radio" name="platform" value="rus">
+                <input class="s-c bottom" type="radio" name="platform" value="rus">
+                <i class="i ico ico-rus"></i>
+                <span class="label">Rus</span>
+                <span class="opt-val">Rus</span>
+              </div>
+              <div id="option-bg"></div>
+            </div>
+          </div>
         </div>
         <!-- /.header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
 

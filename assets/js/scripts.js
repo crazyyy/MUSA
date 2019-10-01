@@ -51,30 +51,30 @@ if (typeof jQuery === "undefined") {
 //   });
 // })()
 var UID = {
-	_current: 0,
-	getNew: function(){
-		this._current++;
-		return this._current;
-	}
+  _current: 0,
+  getNew: function () {
+    this._current++;
+    return this._current;
+  }
 };
-HTMLElement.prototype.pseudoStyle = function(element,prop,value){
-	var _this = this;
-	var _sheetId = "pseudoStyles";
-	var _head = document.head || document.getElementsByTagName('head')[0];
-	var _sheet = document.getElementById(_sheetId) || document.createElement('style');
-	_sheet.id = _sheetId;
-	var className = "pseudoStyle" + UID.getNew();
+HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
+  var _this = this;
+  var _sheetId = "pseudoStyles";
+  var _head = document.head || document.getElementsByTagName('head')[0];
+  var _sheet = document.getElementById(_sheetId) || document.createElement('style');
+  _sheet.id = _sheetId;
+  var className = "pseudoStyle" + UID.getNew();
 
-	_this.className +=  " "+className;
+  _this.className += " " + className;
   if (prop == 'content') {
-    _sheet.innerHTML += "\n."+className+":"+element+"{"+prop+" : '" + value + "' !important}";
+    _sheet.innerHTML += "\n." + className + ":" + element + "{" + prop + " : '" + value + "' !important}";
   } else {
-    _sheet.innerHTML += "\n."+className+":"+element+"{"+prop+" : "+value+"}";
+    _sheet.innerHTML += "\n." + className + ":" + element + "{" + prop + " : " + value + "}";
   }
 
   console.log(_sheet.innerHTML)
-	_head.appendChild(_sheet);
-	return this;
+  _head.appendChild(_sheet);
+  return this;
 };
 
 (function () {
@@ -146,7 +146,7 @@ HTMLElement.prototype.pseudoStyle = function(element,prop,value){
     })
   }
 
-  $('.searchform--tab').on('click', function(e){
+  $('.searchform--tab').on('click', function (e) {
     e.preventDefault();
     if (!$(this).hasClass('searchform--tab__active')) {
       let next_id = $(this).data('id');
@@ -158,12 +158,13 @@ HTMLElement.prototype.pseudoStyle = function(element,prop,value){
   })
 
   $('.header--nav .headnav > li').hover(
-    function() {
+    function () {
       let subNav = $(this).children('.sub-menu');
       if (subNav.length > 0) {
         $('.header--dark').addClass('header--dark--hovered')
       }
-    }, function() {
+    },
+    function () {
       $('.header--dark').removeClass('header--dark--hovered')
     }
   )
@@ -173,7 +174,7 @@ HTMLElement.prototype.pseudoStyle = function(element,prop,value){
 $(document).ready(function () {
   autoPlayYouTubeModal();
 
-  $('.custom-file-upload input[type="file"]').change(function(event) {
+  $('.custom-file-upload input[type="file"]').change(function (event) {
     let i = $('.custom-file-upload').clone();
     let file = $(this)[0].files[0].name;
     console.log(file)
@@ -183,8 +184,6 @@ $(document).ready(function () {
     $('.custom-file-upload').addClass('custom-file-upload__filename')
   });
 });
-
-
 
 function autoPlayYouTubeModal() {
   var trigger = $('.yt-play');
@@ -199,6 +198,27 @@ function autoPlayYouTubeModal() {
       $(theModal + ' iframe').attr('src', '');
     });
   });
+
+  $('#select-button').on('click', function (e) {
+    $(e).stopPropagation();
+  })
+  $('#select-box').on('click', function (e) {
+    $('body').toggleClass('select-box--opened');
+  })
+  $('#select-box').hover(
+    function (e) {
+      $('body').addClass('select-box--opened');
+    },
+    function () {
+      $('body').removeClass('select-box--opened');
+    }
+  )
+  $('.select-box--opened').on('click', function (e) {
+    console.log(e)
+    // $('#select-box').stopPropagation();
+    $('body').toggleClass('select-box--opened');
+
+  })
 };
 (function ($) {
   /*
