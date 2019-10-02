@@ -30,7 +30,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="header--logo col-xl-2 col-lg-2 col-md-2 col-sm-2">
+        <div class="header--logo col-xl-2 col-md-2 col-sm-2">
           <?php if ( !is_front_page() && !is_home() ){ ?>
             <a href="<?php echo home_url(); ?>">
           <?php } ?>
@@ -40,12 +40,12 @@
           <?php } ?>
         </div><!-- /header--logo -->
 
-        <div class="header--phone col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <div class="header--phone col-xl-3 col-md-3 col-sm-3">
           <a href="tel:+380980505037">+38 (098) <span>050-50-37</span></a>
         </div>
         <!-- /.header--phone -->
 
-        <div class="header--social col-xl-2 col-lg-2 col-md-2 col-sm-2">
+        <div class="header--social col-xl-2 col-md-2 col-sm-2">
           <a href="#" class="header--social__whatsapp">whatsapp</a>
           <a href="#" class="header--social__viber">viber</a>
           <a href="#" class="header--social__skype">skype</a>
@@ -55,11 +55,8 @@
         </div>
         <!-- /.header--social col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
 
-        <div class="header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2">
+        <div class="header--lang col-xl-2 col-md-2 col-sm-2">
           <div id="select-box">
-            <!-- ?lang=en -->
-            <!-- ?lang=ua -->
-            <!-- ?lang=ru -->
             <input type="checkbox" id="options-view-button">
             <div id="select-button" class="brd">
               <div id="selected-value">
@@ -97,7 +94,7 @@
         </div>
         <!-- /.header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
 
-        <div class="header--button col-xl-3 col-lg-3 col-md-3 col-sm-3">
+        <div class="header--button col-xl-3 col-md-3 col-sm-3">
           <button class="header--button__admission"><i class="ico ico-admission"></i>Admission with Monarch</button>
         </div>
         <!-- /.header--button col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
@@ -113,7 +110,7 @@
               <?php wpeHeadNav(); ?>
             </nav><!-- /header--nav -->
 
-            <div class="header--search col-xl-3 col-lg-3 col-md-3 col-sm-3">
+            <div class="header--search col-xl-3 col-md-3 col-sm-3">
               <?php get_template_part('searchform'); ?>
             </div>
             <!-- /.header--search -->

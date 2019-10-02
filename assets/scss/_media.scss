@@ -1,11 +1,117 @@
-// col-xl-# ( ≥1200px)
-@include media-breakpoint-down(xl) {
+// col-xl-# ( ≥1200px) (min-width: 1200px)
+@include media-breakpoint-up(xl) {
+  .header--nav {
+    flex: 0 0 75%;
 
+    max-width: 75%;
+  }
 }
-// col-lg-# ( ≥992px)
-@include media-breakpoint-down(lg) {
+// col-lg-# ( ≥992px) (min-width: 992px)
+@include media-breakpoint-up(lg) {
+}
 
+@media (min-width: 992px) and (max-width: 1199px) {
+  .header--logo {
+    flex: 0 0 20%;
+
+    max-width: 20%;
+  }
+  .header--phone {
+    flex: 0 0 22.41%;
+
+    max-width: 22.41%;
+  }
+  .header--social {
+    flex: 0 0 19.53%;
+
+    max-width: 19.53%;
+  }
+  .header--lang {
+    flex: 0 0 13.81%;
+
+    max-width: 13.81%;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  .header--button {
+    flex: 0 0 24.25%;
+
+    max-width: 24.25%;
+    padding-right: 0;
+    padding-left: 5px;
+    .header--button__admission {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  .header--nav {
+    flex: 0 0 93.75%;
+
+    max-width: 93.75%;
+  }
+  .header--search {
+    position: relative;
+
+    flex: 0 0 6.25%;
+
+    max-width: 6.25%;
+    padding-right: 0;
+    padding-left: 0;
+    input {
+      // padding-left: 6px;
+    }
+    form {
+      position: absolute;
+      z-index: 4;
+      top: 50%;
+      right: 0;
+
+      width: auto;
+      // left: 0;
+      height: 40px;
+      margin-top: -20px;
+
+      transition: all 0.5s;
+      &:before {
+        transition: all 0.3s;
+      }
+    }
+    .btn-searchsubmit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+
+      display: none;
+
+      width: 0;
+      padding-right: 6px;
+      padding-left: 6px;
+
+      transition: all 0.5s;
+
+      opacity: 0;
+      border-radius: 0 4px 4px 0;
+    }
+    &.header--search__mobile {
+      form {
+        &:before {
+          opacity: 0;
+        }
+
+      }
+      .search-input {
+        padding-left: 6px;
+      }
+      .btn-searchsubmit {
+        opacity: 1;
+        // display: inline-block;
+      }
+    }
+  }
 }
+
 // col-md-# ( ≥768px)
 @include media-breakpoint-down(md) {
 

@@ -146,7 +146,9 @@ nav {
   background-position: center;
 
   font-size: 0;
+}
 
+.ico {
   &.ico-apply {
     width: 18px;
     height: 18px;
@@ -557,17 +559,6 @@ nav {
     position: relative;
 
     &.select-box--opened {
-      // #select-button {
-      //   border-bottom: 1px solid transparent;
-      //   border-radius: 4px 4px 0 0;
-      // }
-
-
-      // #options {
-      //   display: block;
-      // }
-
-
     }
   }
 
@@ -756,30 +747,10 @@ nav {
 
   .s-c.top {
     top: 0;
-
-    // &:hover {
-    //   ~ {
-    //     i {
-    //       top: -25px;
-
-    //       animation: movedown 0.3s ease 0.1s forwards;
-    //     }
-    //   }
-    // }
   }
 
   .s-c.bottom {
     bottom: 0;
-
-    // &:hover {
-    //   + {
-    //     i {
-    //       bottom: -25px;
-
-    //       // animation: moveup 0.3s ease 0.1s forwards;
-    //     }
-    //   }
-    // }
   }
 
   input[type="radio"] {
@@ -880,11 +851,9 @@ nav {
   }
 }
 
+
+
 .header--nav {
-  flex: 0 0 75%;
-
-  max-width: 75%;
-
   li {
     a {
       padding: 22px 15px 19px;

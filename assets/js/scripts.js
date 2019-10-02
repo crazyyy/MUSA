@@ -190,6 +190,57 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
     $current_option.hide()
   }
 
+  $('.search-input').on('click', function (e) {
+    ShowHideHeaderSearch()
+  })
+
+  $('.search-input').hover(
+    function(){
+      ShowHideHeaderSearch()
+    }, function() {
+      // ShowHideHeaderSearch()
+    }
+  )
+  function ShowHideHeaderSearch(){
+    let window_width = $(window).width();
+    let is_window_beetween_lg_xl = (window_width >= 992) && (window_width <= 1199);
+    if (!is_window_beetween_lg_xl) { return } else {
+      let $container_header_search = $('.header--search');
+      let $header_search_form = $('.header--search form');
+      $container_header_search.attr('data-width', $container_header_search.width())
+
+      if (!$container_header_search.hasClass('header--search__mobile')) {
+        $container_header_search.addClass('header--search__mobile')
+        $header_search_form.animate({
+          width: '310px'
+        }, 300)
+        $header_search_form.html(`${$header_search_form.html()} <button class="btn btn-blue btn-searchsubmit"><i class="ico ico-search"></i></button>`)
+        $header_search_form.find('button').animate({
+          width: '40px'
+        }, 300).show()
+        $('.search-input').focus();
+        $('.search-input').focusout(function(e) {
+          is_window_beetween_lg_xl = (window_width >= 992) && (window_width <= 1199);
+          if (!is_window_beetween_lg_xl) { return } else {
+            $('.header--search form').animate({
+              width: $container_header_search.attr('data-width')
+            }, 300)
+            setTimeout(() => {
+              $header_search_form.find('button').remove();
+              $('.header--search form').width('auto')
+              $container_header_search.removeClass('header--search__mobile');
+            }, 600);
+            setTimeout(() => {
+              $('.search-input').on('click', function (e) {
+                ShowHideHeaderSearch()
+              })
+            }, 1000);
+          }
+        })
+      }
+    }
+  }
+
 })();
 $(document).ready(function () {
   autoPlayYouTubeModal();
