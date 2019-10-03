@@ -7,12 +7,12 @@
       <div class="container home-slider--searchform">
         <!-- // add vue seach https://premium.wpmudev.org/blog/creating-a-hybrid-single-page-app-wordpress-with-vuejs/
         https://www.sitepoint.com/building-a-wordpress-plugin-with-vue/ -->
-        <div class="row">
-          <div class="searchform--tabs col-12">
-            <button class="searchform--tab searchform--tab__active" data-id="#programs"><i></i>Programs</button>
-            <button class="searchform--tab" data-id="#universities"><i></i>Universities</button>
+
+          <div class="searchform--tabs">
+            <button class="searchform--tab searchform--tab__active" data-id="#programs"><i class="ico ico-programs">programs</i>Programs</button>
+            <button class="searchform--tab" data-id="#universities"><i class="ico ico-universities"></i>Universities</button>
           </div>
-          <div id="programs" class="searchform--content searchform--content__active  col-12">
+          <div id="programs" class="searchform--content searchform--content__active col-lg-12 col-xl-12">
             <h4><span>What do you want to study?</span></h4>
             <form action="">
               <select name="areas" id="areas">
@@ -37,7 +37,7 @@
             </form>
             <p><strong>Popular:</strong> <a href="#">Health/Medicine</a>, <a href="#">Mechanical engineering</a>, <a href="#">IT</a>, <a href="#">Law</a></p>
           </div>
-          <div id="universities" class="searchform--content col-12">
+          <div id="universities" class="searchform--content col-lg-12 col-xl-12">
             <h4><span>Where do you want to study?</span></h4>
             <form action="">
               <select name="types" id="types">
@@ -62,8 +62,6 @@
             </form>
             <p><strong>Popular:</strong> <a href="#">Health/Medicine</a>, <a href="#">Mechanical engineering</a>, <a href="#">IT</a>, <a href="#">Law</a></p>
           </div>
-        </div>
-        <!-- /.row -->
 
       </div>
       <!-- /.home-slider--searchform -->
@@ -73,15 +71,15 @@
     <div class="container container--stats">
       <div class="row">
         <h4 class="home--blocktitle col-12">Our statistics</h4>
-        <div class="home--stats col-2 offset-2">
+        <div class="home--stats offset-2 col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
           <span>Costomers</span>
           <?php the_field('costomers');?>
         </div>
-        <div class="home--stats col-4">
+        <div class="home--stats col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
           <span>Invited</span>
           <?php the_field('invited');?>
         </div>
-        <div class="home--stats col-2">
+        <div class="home--stats col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
           <span>Accepted</span>
           <?php the_field('accepted');?>
         </div>
@@ -92,7 +90,7 @@
           // $difference_percent_good = number_format($accepted / $costomers * 100);
           $difference_percent_good = 100 - $difference_percent_fail;
         ?>
-        <div class="home--rate home--rate__failure col-4 offset-1">
+        <div class="home--rate home--rate__failure col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-6 offset-1">
           <h5>failure rate:
             <span><?php echo $difference_percent_fail; ?>%</span>
           </h5>
@@ -100,7 +98,7 @@
           <hr class="rate" style="width: <?php echo $difference_percent_fail; ?>%;">
           </div>
         </div>
-        <div class="home--rate home--rate__succes col-4 offset-2">
+        <div class="home--rate home--rate__succes col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-6 offset-2">
           <h5>Success rate:
             <span><?php echo $difference_percent_good; ?>%</span>
           </h5>
@@ -117,11 +115,11 @@
   <!-- /.container-fluid -->
 
   <div class="container container--werits">
-    <div class="row">
+    <div class="row justify-content-center">
       <h4 class="home--blocktitle col-12">Our werits</h4>
       <?php query_posts("showposts=1&post_type=review"); ?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-        <div class="werits werits--rerviews col-4">
+        <div class="werits werits--rerviews col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
           <h4><i class="ico ico-wer-reviews"></i>Reviews</h4>
           <div class="werits--image">
             <?php if ( has_post_thumbnail()) { ?>
@@ -145,7 +143,7 @@
 
       <?php query_posts("showposts=1&post_type=post&cat=75"); ?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-        <div class="werits werits--stories col-4">
+        <div class="werits werits--stories col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
           <h4><i class="ico ico-wer-stor"></i>Student stories</h4>
           <div class="werits--image">
             <?php if ( has_post_thumbnail()) { ?>
@@ -169,7 +167,7 @@
 
       <?php query_posts("showposts=1&post_type=post&cat=1"); ?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-        <div class="werits werits--news col-4">
+        <div class="werits werits--news col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
           <h4><i class="ico ico-wer-news"></i>News</h4>
           <div class="werits--image">
             <?php if ( has_post_thumbnail()) { ?>

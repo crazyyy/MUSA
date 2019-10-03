@@ -119,7 +119,23 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
       lazyLoad: true,
       autoplayTimeout: 10000,
       // autoplayTimeout: 3000,
-      autoplayHoverPause: true
+      autoplayHoverPause: true,
+      responsiveClass:true,
+      responsive:{
+          0:{
+              items:1,
+              nav:false,
+              loop:true
+          },
+          768:{
+              items:3,
+              nav:false
+          },
+          992:{
+              items:4,
+              nav:false
+          }
+      }
     });
   }
   let $pagecontractTabs = $('.pagecontract-tabs');

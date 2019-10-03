@@ -49,34 +49,31 @@
     </div><!-- /.container -->
 
     <div class="container-fluid container-color--bluelight container--services">
-      <div class="row">
-        <div class="container">
-          <div class="row">
-            <h2 class="services--title col-12"><?php echo __('How to take services', 'wpeasy'); ?></h2>
+      <div class="container">
+        <div class="row">
+          <h2 class="services--title col-12"><?php echo __('How to take services', 'wpeasy'); ?></h2>
 
-            <div class="howtoservices-item howtoservices-item--read col-2">
-              <p><a href="">Read</a> the public offer</p>
-            </div>
-            <div class="howtoservices-item howtoservices-item--download col-2">
-              <p><a href="">Download</a> offer</p>
-            </div>
-            <div class="howtoservices-item howtoservices-item--print col-2">
-              <p><a href="">Print</a> offer</p>
-            </div>
-            <div class="howtoservices-item howtoservices-item--put col-2">
-              <p><a href="">Put</a> the <i class="ico ico-verified">verified</i> <i class="ico ico-close">close</i> front of services you want</p>
-            </div>
-            <div class="howtoservices-item howtoservices-item--signature col-2">
-              <p><a href="">Signature</a> your offer</p>
-            </div>
-            <div class="howtoservices-item howtoservices-item--legalize col-2">
-              <p><a href="">Legalize</a> offer</p>
-            </div>
-
-            <p class="howtoservices-question col-12">Still have questions? <a href="">Contact us</a></p>
-
+          <div class="howtoservices-item howtoservices-item--read col-2">
+            <p><a href="">Read</a> the public offer</p>
           </div>
-          <!-- /.row -->
+          <div class="howtoservices-item howtoservices-item--download col-2">
+            <p><a href="">Download</a> offer</p>
+          </div>
+          <div class="howtoservices-item howtoservices-item--print col-2">
+            <p><a href="">Print</a> offer</p>
+          </div>
+          <div class="howtoservices-item howtoservices-item--put col-2">
+            <p><a href="">Put</a> the <i class="ico ico-verified">verified</i> <i class="ico ico-close">close</i> front of services you want</p>
+          </div>
+          <div class="howtoservices-item howtoservices-item--signature col-2">
+            <p><a href="">Signature</a> your offer</p>
+          </div>
+          <div class="howtoservices-item howtoservices-item--legalize col-2">
+            <p><a href="">Legalize</a> offer</p>
+          </div>
+
+          <p class="howtoservices-question col-12">Still have questions? <a href="">Contact us</a></p>
+
         </div>
         <!-- /.container -->
 

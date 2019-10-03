@@ -30,7 +30,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="header--logo col-xl-2 col-md-2 col-sm-2">
+        <div class="header--logo col-xl-2">
           <?php if ( !is_front_page() && !is_home() ){ ?>
             <a href="<?php echo home_url(); ?>">
           <?php } ?>
@@ -40,12 +40,12 @@
           <?php } ?>
         </div><!-- /header--logo -->
 
-        <div class="header--phone col-xl-3 col-md-3 col-sm-3">
+        <div class="header--phone col-xl-3">
           <a href="tel:+380980505037">+38 (098) <span>050-50-37</span></a>
         </div>
         <!-- /.header--phone -->
 
-        <div class="header--social col-xl-2 col-md-2 col-sm-2">
+        <div class="header--social col-xl-2">
           <a href="#" class="header--social__whatsapp">whatsapp</a>
           <a href="#" class="header--social__viber">viber</a>
           <a href="#" class="header--social__skype">skype</a>
@@ -53,9 +53,9 @@
           <a href="#" class="header--social__facebook">facebook</a>
           <a href="#" class="header--social__instagram">instagram</a>
         </div>
-        <!-- /.header--social col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
+        <!-- /.header--social col-xl-2 col-lg-2 col-md-2 -->
 
-        <div class="header--lang col-xl-2 col-md-2 col-sm-2">
+        <div class="header--lang col-xl-2">
           <div id="select-box">
             <input type="checkbox" id="options-view-button">
             <div id="select-button" class="brd">
@@ -92,33 +92,35 @@
             </div>
           </div>
         </div>
-        <!-- /.header--lang col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
+        <!-- /.header--lang col-xl-2 col-lg-2 col-md-2 -->
 
-        <div class="header--button col-xl-3 col-md-3 col-sm-3">
-          <button class="header--button__admission"><i class="ico ico-admission"></i>Admission with Monarch</button>
+        <div class="header--button col-xl-3">
+          <button class="header--button__admission"><i class="ico ico-admission"></i>Admission <span>with Monarch</span></button>
         </div>
-        <!-- /.header--button col-xl-2 col-lg-2 col-md-2 col-sm-2 -->
+        <!-- /.header--button col-xl-2 col-lg-2 col-md-2 -->
+
+        <div class="header--mobswitch">
+          <button class="btn btn--mobswitch">Menu</button>
+        </div>
 
       </div><!-- /.row -->
     </div><!-- /.container -->
 
     <div class="container-fluid header--dark">
-      <div class="row">
-        <div class="container">
-          <div class="row">
-            <nav class="header--nav" role="navigation">
-              <?php wpeHeadNav(); ?>
-            </nav><!-- /header--nav -->
+      <div class="container">
+        <div class="row">
+          <nav class="header--nav" role="navigation">
+            <?php wpeHeadNav(); ?>
+          </nav><!-- /header--nav -->
 
-            <div class="header--search col-xl-3 col-md-3 col-sm-3">
-              <?php get_template_part('searchform'); ?>
-            </div>
-            <!-- /.header--search -->
+          <div class="header--search col-xl-3">
+            <?php get_template_part('searchform'); ?>
+          </div>
+          <!-- /.header--search -->
 
-          </div><!-- /.row -->
-        </div>
-        <!-- /.container -->
+        </div><!-- /.row -->
       </div>
+      <!-- /.container -->
     </div><!-- /.container -->
   </header><!-- /header -->
 
