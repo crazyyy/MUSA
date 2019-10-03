@@ -71,7 +71,7 @@
     <div class="container container--stats">
       <div class="row">
         <h4 class="home--blocktitle col-12">Our statistics</h4>
-        <div class="home--stats offset-2 col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
+        <div class="home--stats col-xl-2 offset-xl-2 col-lg-2 offset-lg-2 col-md-3 offset-md-1 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
           <span>Costomers</span>
           <?php the_field('costomers');?>
         </div>
@@ -79,7 +79,7 @@
           <span>Invited</span>
           <?php the_field('invited');?>
         </div>
-        <div class="home--stats col-xl-2 col-lg-2 col-md-2 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
+        <div class="home--stats col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-4 offset-sm-0 offset-xs-0">
           <span>Accepted</span>
           <?php the_field('accepted');?>
         </div>
@@ -90,7 +90,7 @@
           // $difference_percent_good = number_format($accepted / $costomers * 100);
           $difference_percent_good = 100 - $difference_percent_fail;
         ?>
-        <div class="home--rate home--rate__failure col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-6 offset-1">
+        <div class="home--rate home--rate__failure col-xl-4 offset-xl-1 col-lg-4 offset-lg-1 col-md-4 offset-md-1 col-sm-6 col-xs-6 ">
           <h5>failure rate:
             <span><?php echo $difference_percent_fail; ?>%</span>
           </h5>
@@ -98,7 +98,7 @@
           <hr class="rate" style="width: <?php echo $difference_percent_fail; ?>%;">
           </div>
         </div>
-        <div class="home--rate home--rate__succes col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-6 offset-2">
+        <div class="home--rate home--rate__succes col-xl-4 offset-xl-2 col-lg-4 offset-xl-2 col-md-4 offset-xl-2 col-sm-6 col-xs-6 ">
           <h5>Success rate:
             <span><?php echo $difference_percent_good; ?>%</span>
           </h5>

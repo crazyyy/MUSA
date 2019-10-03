@@ -54,6 +54,7 @@
       <div class="container">
         <div class="row">
             <div class="footer--nav col-12">
+              <button class="footer--nav__switcher">Menu navigation</button>
               <ul>
                 <li><a href="#">About us</a></li>
                 <li><a href="#">Choose study </a></li>

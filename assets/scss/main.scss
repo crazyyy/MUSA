@@ -432,6 +432,12 @@ nav {
 
     background-image: url(../img/ico/ico-arrow-down.png#spriteimage);
   }
+
+  &.ico-menu-close {
+    width: 15px;
+    height: 14px;
+    background-image: url(../img/ico/ico-menu-close.png#spriteimage);
+  }
 }
 
 .header--logo {
@@ -1434,6 +1440,10 @@ article {
       opacity: 0.8;
     }
 
+    .ico {
+      margin-right: 12px;
+    }
+
     &.searchform--tab__active {
       background-color: #fff;
 
@@ -1446,8 +1456,8 @@ article {
   .searchform--content {
     display: none;
 
-    margin-right: 15px;
-    margin-left: 15px;
+    // margin-right: 15px;
+    // margin-left: 15px;
     padding-top: 40px;
     padding-bottom: 40px;
 
@@ -4156,7 +4166,9 @@ footer {
     background-image: url(../img/logo-footer.png);
     background-repeat: no-repeat;
     background-position: 15px center;
-
+    .footer--nav__switcher {
+      display: none;
+    }
 
     ul {
       display: flex;

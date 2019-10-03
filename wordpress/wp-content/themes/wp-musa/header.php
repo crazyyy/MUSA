@@ -100,7 +100,7 @@
         <!-- /.header--button col-xl-2 col-lg-2 col-md-2 -->
 
         <div class="header--mobswitch">
-          <button class="btn btn--mobswitch">Menu</button>
+          <button class="btn btn--mobswitch"><span><i class="ico ico-menu-close"></i>Закрыть</span> </button>
         </div>
 
       </div><!-- /.row -->
