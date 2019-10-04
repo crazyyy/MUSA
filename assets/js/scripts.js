@@ -86,7 +86,7 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
       }
     },
     update : function() {
-      console.log(`prev / next = ${this.width} / ${Math.max(document.documentElement.clientWidth, window.innerWidth || 0)}`)
+      // console.log(`prev / next = ${this.width} / ${Math.max(document.documentElement.clientWidth, window.innerWidth || 0)}`)
       this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     },
     isSizeXS : function() {

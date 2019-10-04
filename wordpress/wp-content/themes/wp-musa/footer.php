@@ -5,7 +5,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="footer--widget col-xl-3 col-lg-3 col-sm-6 col-xs-6">
+        <div class="footer--widget col-xl-3 col-lg-3 col-sm-12 col-xs-12">
           <h6>Study in Ukraine</h6>
           <ul>
             <li><a href="">Guide to higher education in Ukraine</a></li>
@@ -16,7 +16,7 @@
           </ul>
         </div>
         <!-- /.footer--widget col-xl-3 col-lg-3 -->
-        <div class="footer--widget col-xl-3 col-lg-3 col-sm-6 col-xs-6">
+        <div class="footer--widget col-xl-3 col-lg-3 col-sm-12 col-xs-12">
           <h6>How to apply</h6>
           <ul>
             <li><a href="">Admission Support</a></li>
@@ -27,7 +27,7 @@
           </ul>
         </div>
         <!-- /.footer--widget col-xl-3 col-lg-3 -->
-        <div class="footer--widget col-xl-3 col-lg-3 col-sm-6 col-xs-6">
+        <div class="footer--widget col-xl-3 col-lg-3 col-sm-12 col-xs-12">
           <h6>Why Ukraine</h6>
           <ul>
             <li><a href="">About Ukraine</a></li>
@@ -37,7 +37,7 @@
           </ul>
         </div>
         <!-- /.footer--widget col-xl-3 col-lg-3 -->
-        <div class="footer--widget col-xl-3 col-lg-3 col-sm-6 col-xs-6">
+        <div class="footer--widget col-xl-3 col-lg-3 col-sm-12 col-xs-12">
           <h6>Life in Ukraine</h6>
           <ul>
             <li><a href="">Social life</a></li>
