@@ -64,7 +64,6 @@ import discardDuplicates from 'postcss-discard-duplicates';
 import discardEmpty from 'postcss-discard-empty';
 import combineDuplicatedSelectors from 'postcss-combine-duplicated-selectors';
 import mqpacker from 'css-mqpacker'; // install via yarn
-import charset from 'postcss-single-charset';
 import willChangeTransition from 'postcss-will-change-transition';
 import willChange from 'postcss-will-change';
 import momentumScrolling from 'postcss-momentum-scrolling';
@@ -86,7 +85,6 @@ const plugins = require('gulp-load-plugins')({
 });
 
 let processors = [
-  charset(),
   willChangeTransition(),
   willChange(),
   momentumScrolling([

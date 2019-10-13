@@ -119,7 +119,6 @@
     "postcss-easysprites": "^0.1.10",
     "postcss-momentum-scrolling": "^1.9.15",
     "postcss-preset-env": "^6.7.0",
-    "postcss-single-charset": "^2.0.0",
     "postcss-unprefix": "^2.1.4",
     "postcss-urlrev": "^2.0.0",
     "postcss-will-change": "^3.0.0",
