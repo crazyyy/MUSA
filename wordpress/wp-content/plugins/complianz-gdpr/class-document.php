@@ -261,9 +261,135 @@ if (!class_exists("cmplz_document")) {
 
             add_filter( 'body_class', array($this, 'add_body_class_for_complianz_documents') );
 
+            //unlinking documents
+            add_action('add_meta_boxes', array($this, 'add_meta_box'));
+            add_action('save_post', array($this, 'save_metabox_data'));
+
+
+        }
+
+        public function add_meta_box($post_type)
+        {
+            global $post;
+
+            if (!$post) return;
+
+            if($this->is_complianz_page($post->ID) && !cmplz_uses_gutenberg()) {
+                add_meta_box('cmplz_edit_meta_box', __('Document status', 'complianz-gdpr'), array($this, 'metabox_unlink_from_complianz'), null, 'side', 'high', array());
+            }
+        }
+
+        function metabox_unlink_from_complianz(){
+            if (!current_user_can('manage_options')) return;
+            wp_nonce_field('cmplz_unlink_nonce', 'cmplz_unlink_nonce');
+
+            global $post;
+            $sync = $this->syncStatus($post->ID);
+            ?>
+            <select name="cmplz_document_status">
+                <option value="sync" <?php echo $sync==='sync' ? 'selected="selected"' : ''?>><?php _e("Synchronize document with Complianz", "complianz-gdpr");?></option>
+                <option value="unlink" <?php echo $sync==='unlink' ? 'selected="selected"' : ''?>><?php _e("Edit document and stop synchronization", "complianz-gdpr");?></option>
+            </select>
+            <?php
+
         }
 
 
+
+        public function syncStatus($post_id){
+            $post = get_post($post_id);
+            $sync = 'unlink';
+
+            if (!$post) return $sync;
+
+            $shortcode = 'cmplz-document';
+            $block = 'complianz/document';
+
+            $html = $post->post_content;
+            if (has_block($block, $html)) {
+                $elements = parse_blocks( $html );
+                foreach($elements as $element){
+                    if ($element['blockName']===$block){
+                        if (isset($element['attrs']['documentSyncStatus']) && $element['attrs']['documentSyncStatus']==='unlink'){
+                            $sync = 'unlink';
+                        } else {
+                            $sync = 'sync';
+                        }
+                    }
+                }
+            } elseif (has_shortcode($post->post_content, $shortcode)) {
+                $sync = get_post_meta($post_id, 'cmplz_document_status', true);
+                if (!$sync) $sync = 'sync';
+            }
+
+            //default
+            return $sync;
+        }
+
+
+        public function save_metabox_data()
+        {
+            if (!current_user_can('manage_options')) return;
+            // check if this isn't an auto save
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+                return;
+
+            // security check
+            if (!isset($_POST['cmplz_unlink_nonce']) || !wp_verify_nonce($_POST['cmplz_unlink_nonce'], 'cmplz_unlink_nonce'))
+                return;
+
+            if (!isset($_POST['cmplz_document_status'])) return;
+
+            global $post;
+
+            if (!$post) return;
+            //prevent looping
+            remove_action( 'save_post', array( $this, 'save_metabox_data' ) );
+
+            $sync = sanitize_text_field($_POST['cmplz_document_status'])=='unlink' ? 'unlink' : 'sync';
+
+            //save the document's shortcode in a meta field
+
+            if ($sync==='unlink') {
+                //get shortcode from page
+                $shortcode = false;
+                if (preg_match('/<!-- wp:complianz\/document {.*?"selectedDocument":"(.*?)"} \/-->/i', $post->post_content, $matches)) {
+
+                    $shortcode  = $matches[0];
+                    $type  = $matches[1];
+                } elseif (preg_match('/\[cmplz-document type="(.*?)".*?\]/i', $post->post_content, $matches)) {
+                    $shortcode  = $matches[0];
+                    $type  = $matches[1];
+                }
+
+                if ($shortcode) {
+                    //store shortcode
+                    update_post_meta($post->ID, 'cmplz_shortcode', $post->post_content);
+                    $document_html = COMPLIANZ()->document->get_document_html($type);
+                    $args = array(
+                        'post_content' => $document_html,
+                        'ID' => $post->ID,
+                    );
+                    wp_update_post($args);
+                }
+            } else {
+                $shortcode = get_post_meta($post->ID,'cmplz_shortcode', true);
+                if ($shortcode) {
+                    $args = array(
+                        'post_content' => $shortcode,
+                        'ID' => $post->ID,
+                    );
+                    wp_update_post($args);
+                }
+                delete_post_meta($post->ID,'cmplz_shortcode');
+            }
+            update_post_meta($post->ID, 'cmplz_document_status', $sync);
+
+            add_action( 'save_post', array( $this, 'save_metabox_data' ) );
+
+
+
+        }
         /**
          * add a class to the body telling the page it's a complianz doc. We use this for the soft cookie wall
          * @param $classes
@@ -556,16 +682,17 @@ if (!class_exists("cmplz_document")) {
          * get the shortcode or block for a page type
          *
          * @param string $type
+         * @param bool $force_classic
          * @return string $shortcode
          *
          *
          */
 
 
-        public function get_shortcode($type)
+        public function get_shortcode($type, $force_classic=false)
         {
             //even if on gutenberg, with elementor we have to use classic shortcodes.
-            if (cmplz_uses_gutenberg() && !$this->uses_elementor()){
+            if (!$force_classic && cmplz_uses_gutenberg() && !$this->uses_elementor()){
                 $page = COMPLIANZ()->config->pages[$type];
                 return '<!-- wp:complianz/document {"title":"'.$page['title'].'","selectedDocument":"'.$type.'"} /-->';
             } else {
@@ -759,6 +886,9 @@ if (!class_exists("cmplz_document")) {
 
         public function is_complianz_page($post_id = false)
         {
+            $post_meta = get_post_meta($post_id, 'cmplz_shortcode',false);
+            if ($post_meta) return true;
+
             $shortcode = 'cmplz-document';
             $block = 'complianz/document';
 
@@ -791,13 +921,20 @@ if (!class_exists("cmplz_document")) {
             if (!$page_id) {
                 $pages = get_pages();
                 foreach ($pages as $page) {
+                    $post_meta = get_post_meta($page->ID, 'cmplz_shortcode',true);
+                    if ($post_meta) {
+                        $html = $post_meta;
+                    } else {
+                        $html = $page->post_content;
+                    }
+
                     /*
                      * Gutenberg block check
                      *
                      * */
                     if (cmplz_uses_gutenberg() && has_block($block, $page)){
                         //check if block contains property
-                        $html =  $page->post_content;
+
 
                         if (preg_match('/"selectedDocument":"(.*?)"/i', $html, $matches)) {
                             if ($matches[1]===$type) {
@@ -813,7 +950,7 @@ if (!class_exists("cmplz_document")) {
                      *
                      * */
 
-                    if (has_shortcode($page->post_content, $shortcode) && strpos($page->post_content, 'type="' . $type.'"')!==FALSE) {
+                    if (has_shortcode($html, $shortcode) && strpos($html, 'type="' . $type.'"')!==FALSE) {
                         set_transient('cmplz_shortcode_' . $type, $page->ID, HOUR_IN_SECONDS);
                         return $page->ID;
                     }
@@ -948,10 +1085,16 @@ if (!class_exists("cmplz_document")) {
                 }
             }
 
+
             $uploads = wp_upload_dir();
             $upload_dir = $uploads['basedir'];
 
+
+
             $pages = COMPLIANZ()->config->pages;
+
+            //double check if it exists
+            if (!isset($pages[$page])) return;
 
             $title = $pages[$page]['title'];
             $region = $pages[$page]['condition']['regions'];
@@ -961,6 +1104,8 @@ if (!class_exists("cmplz_document")) {
             if ($load_css) {
                 $css = file_get_contents (cmplz_path . "core/assets/css/document.css");
             }
+            $title_html = $save_to_file ? '' : '<h4 class="center">' . $title . '</h4>';
+
             $html = '
                     <style>
                     '.$css.'
@@ -989,7 +1134,7 @@ if (!class_exists("cmplz_document")) {
                     </style>
                     
                     <body >
-                    <h4 class="center">' . $title . '</h4>
+                    ' . $title_html . '
                     ' . $document_html . '
                     </body>';
 
@@ -1014,7 +1159,6 @@ if (!class_exists("cmplz_document")) {
             if (!file_exists($upload_dir . '/complianz')){
                 mkdir($upload_dir . '/complianz');
             }
-
             if (!file_exists($upload_dir . '/complianz/tmp')){
                 mkdir($upload_dir . '/complianz/tmp');
             }

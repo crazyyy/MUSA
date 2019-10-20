@@ -24,8 +24,7 @@ if (!function_exists('cmplz_fields_filter')) {
         $tm_fires_scripts = cmplz_get_value('fire_scripts_in_tagmanager') === 'yes' ? true : false;
         $uses_tagmanager = cmplz_get_value('compile_statistics') === 'google-tag-manager' ? true : false;
         if ($uses_tagmanager && $tm_fires_scripts) {
-            $fields['use_categories']['help'] = __('Because you have selected Tag Manager and Tag Manager fires scripts, categories are required','complianz-gdpr');
-            $fields['use_categories']['disabled'] = true;
+            //$fields['use_categories']['disabled'] = true;
         }
 
         return $fields;
@@ -140,9 +139,8 @@ if (!function_exists('cmplz_disclosed_data_12months')) {
  * */
 if (!function_exists('cmplz_get_value')) {
 
-    function cmplz_get_value($fieldname, $post_id = false, $page = false)
+    function cmplz_get_value($fieldname, $post_id = false, $page = false, $use_default=true)
     {
-
         if (!$page && !isset(COMPLIANZ()->config->fields[$fieldname])) return false;
 
         //if  a post id is passed we retrieve the data from the post
@@ -152,7 +150,7 @@ if (!function_exists('cmplz_get_value')) {
         } else {
             $fields = get_option('complianz_options_' . $page);
 
-            $default = ($page && isset(COMPLIANZ()->config->fields[$fieldname]['default'])) ? COMPLIANZ()->config->fields[$fieldname]['default'] : '';
+            $default = ($use_default && $page && isset(COMPLIANZ()->config->fields[$fieldname]['default'])) ? COMPLIANZ()->config->fields[$fieldname]['default'] : '';
             $value = isset($fields[$fieldname]) ? $fields[$fieldname] : $default;
 
         }
@@ -218,13 +216,12 @@ if (!function_exists('cmplz_eu_site_needs_cookie_warning_cats')) {
     }
 }
 
-if (!function_exists('cmplz_company_in_eu')) {
+if (!function_exists('cmplz_company_located_in_region')) {
 
-    function cmplz_company_in_eu()
+    function cmplz_company_located_in_region($region)
     {
         $country_code = cmplz_get_value('country_company');
-        $in_eu = (cmplz_get_region_for_country($country_code) === 'eu');
-        return $in_eu;
+        return (cmplz_get_region_for_country($country_code) === $region);
     }
 }
 
@@ -238,7 +235,9 @@ if (!function_exists('cmplz_has_region')) {
     function cmplz_has_region($code)
     {
         $regions = cmplz_get_regions(false);
-        if (isset($regions[$code])) return true;
+        if (isset($regions[$code])) {
+            return true;
+        }
         return false;
     }
 }
@@ -378,10 +377,15 @@ if (!function_exists('cmplz_scan_detected_social_media')) {
 
     function cmplz_scan_detected_social_media()
     {
-        $social_media = get_option('cmplz_detected_social_media');
+        $social_media = get_option('cmplz_detected_social_media', array());
+        if (!is_array($social_media)) $social_media = array($social_media);
+        $social_media = array_filter($social_media);
+
+        $social_media = apply_filters('cmplz_detected_social_media', $social_media);
 
         //nothing scanned yet, or nothing found
-        if (!$social_media || (count($social_media) == 0)) return false;
+        if (!$social_media || (count($social_media) == 0)) $social_media = false;
+
         return $social_media;
     }
 }
@@ -390,11 +394,32 @@ if (!function_exists('cmplz_scan_detected_thirdparty_services')) {
 
     function cmplz_scan_detected_thirdparty_services()
     {
-        $thirdparty = get_option('cmplz_detected_thirdparty_services');
+        $thirdparty = get_option('cmplz_detected_thirdparty_services', array());
+        if (!is_array($thirdparty)) $thirdparty = array($thirdparty);
+        $thirdparty = array_filter($thirdparty);
+        $thirdparty = apply_filters('cmplz_detected_services', $thirdparty);
+
         //nothing scanned yet, or nothing found
-        if (!$thirdparty || (count($thirdparty) == 0)) return false;
+        if (!$thirdparty || (count($thirdparty) == 0)) $thirdparty = false;
 
         return $thirdparty;
+    }
+}
+
+if (!function_exists('cmplz_scan_detected_stats')) {
+
+    function cmplz_scan_detected_stats()
+    {
+        $stats = get_option('cmplz_detected_stats', array());
+        if (!is_array($stats)) $stats = array($stats);
+        $stats = array_filter($stats);
+
+        $stats = apply_filters('cmplz_detected_stats', $stats);
+
+        //nothing scanned yet, or nothing found
+        if (!$stats || (count($stats) == 0)) $stats = false;
+
+        return $stats;
     }
 }
 
@@ -488,9 +513,6 @@ if (!function_exists('cmplz_has_custom_privacy_policy')) {
 if (!function_exists('cmplz_statistics_no_sharing_allowed')) {
     function cmplz_statistics_no_sharing_allowed()
     {
-
-        $fields = get_option('complianz_options_wizard', false, 'wizard');
-        $value = isset($fields['compile_statistics']) ? $fields['compile_statistics'] : false;
 
         $statistics = cmplz_get_value('compile_statistics', false, 'wizard');
         $tagmanager = ($statistics === 'google-tag-manager') ? true : false;
@@ -633,7 +655,7 @@ if (!function_exists('cmplz_is_pagebuilder_preview')) {
     {
         $preview = false;
         global $wp_customize;
-        if (isset( $wp_customize ) || isset($_GET['fb-edit']) || isset($_GET['et_pb_preview']) || isset($_GET['et_fb']) || isset($_GET['elementor-preview']) || isset($_GET['fl_builder'])) {
+        if (isset( $wp_customize ) || isset($_GET['fb-edit']) || isset($_GET['et_pb_preview']) || isset($_GET['et_fb']) || isset($_GET['elementor-preview']) || isset($_GET['fl_builder']) || isset($_GET['tve'])) {
             $preview = true;
         }
 
@@ -651,7 +673,13 @@ if (!function_exists('cmplz_ajax_user_settings')) {
     {
         $data = apply_filters('cmplz_user_data', array());
         $data['consenttype'] = apply_filters('cmplz_user_consenttype', COMPLIANZ()->company->get_default_consenttype());
+        $data['region'] = apply_filters('cmplz_user_region', COMPLIANZ()->company->get_default_region());
+        $data['forceEnableStats'] = apply_filters('cmplz_user_force_enable_stats', false);
         $data['version'] = cmplz_version;
+        //We need this here because the integrations are not loaded yet, so the filter will return empty, overwriting the loaded data.
+        //@todo: move this to the inline script  generation
+        //and move all generic, not banner specific data away from the banner.
+        unset($data["set_cookies"]);
         $banner_id = cmplz_get_default_banner_id();
         $banner = new CMPLZ_COOKIEBANNER($banner_id);
         $data['banner_version'] = $banner->banner_version;
@@ -759,7 +787,7 @@ if (!function_exists('cmplz_set_activation_time_stamp')) {
  * For all legal documents for the US, privacy statement, dataleaks or processing agreements, the language should always be en_US
  *
  * */
-add_filter('locale', 'cmplz_set_plugin_language', 9, 1);
+add_filter('locale', 'cmplz_set_plugin_language', 19, 1);
 if (!function_exists('cmplz_set_plugin_language')) {
     function cmplz_set_plugin_language($locale)
     {
@@ -775,12 +803,10 @@ if (!function_exists('cmplz_set_plugin_language')) {
                 $locale = 'en_US';
             }
         }
-
-        $cmplz_lang = isset($_GET['clang']) ? $_GET['clang'] : false;
-        if ($cmplz_lang == 'en') {
+        if (isset($_GET['clang']) && $_GET['clang'] === 'en') {
             $locale = 'en_US';
-        }
 
+        }
         return $locale;
     }
 }
@@ -931,7 +957,7 @@ if (!function_exists('cmplz_placeholder')) {
     /**
      * Get placeholder for any type of blocked content
      *
-     * @param string $type
+     * @param bool|string $type
      * @param string $src
      * @return string url
      *
@@ -955,83 +981,9 @@ if (!function_exists('cmplz_placeholder')) {
             }
         }
 
-        switch ($type) {
-            case 'googlemaps':
-                $key_pattern = '/maps\.googleapis\.com\/maps\/api\/staticmap\?key\=(.*?)&/i';
-                if (preg_match($key_pattern, $src, $matches)) {
-                    $id = $matches[1];
-                    $new_src = get_transient('cmplz_googlemaps_image_'.sanitize_title($id));
-                    if (!$new_src || !file_exists($new_src)){
-                        $new_src = cmplz_download_to_site(html_entity_decode($src), sanitize_title($id), false);
-                        set_transient('cmplz_googlemaps_image_'.sanitize_title($id), $new_src, MONTH_IN_SECONDS);
-                    }
-                } else {
-                    $new_src = cmplz_default_placeholder($type);
-                }
-                break;
-            case 'youtube':
-                $youtube_pattern = '/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/videoseries\?list=RD|embed\/|watch\?v=)([^#\&\?]*).*/i';
-                if (preg_match($youtube_pattern, $src, $matches)) {
-                    $youtube_id = $matches[1];
-                    /*
-                     * The highest resolution of youtube thumbnail is the maxres, but it does not
-                     * always exist. In that case, we take the hq thumb
-                     * To lower the number of file exists checks, we cache the result.
-                     *
-                     * */
-                    $new_src = get_transient("cmplz_youtube_image_$youtube_id");
-                    if (!$new_src || !file_exists($new_src)) {
-                        $new_src = "https://img.youtube.com/vi/$youtube_id/maxresdefault.jpg";
-                        if (!cmplz_remote_file_exists($new_src)) {
-                            $new_src = "https://img.youtube.com/vi/$youtube_id/hqdefault.jpg";
-                        }
-                        $new_src = cmplz_download_to_site($new_src, $type.$youtube_id);
+        $new_src = cmplz_default_placeholder($type);
 
-                        set_transient("cmplz_youtube_image_$youtube_id", $new_src, WEEK_IN_SECONDS);
-                    }
-                }
-                break;
-            case 'vimeo':
-                $vimeo_pattern = '/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:[a-zA-Z0-9_\-]+)?/i';
-                if (preg_match($vimeo_pattern, $src, $matches)) {
-                    $vimeo_id = $matches[1];
-                    $new_src = get_transient("cmplz_vimeo_image_$vimeo_id");
-                    if (!$new_src || !file_exists($new_src)) {
-                        $vimeo_images = simplexml_load_string(file_get_contents("http://vimeo.com/api/v2/video/$vimeo_id.xml"));
-                        $new_src = $vimeo_images->video->thumbnail_large;
-                        $new_src = cmplz_download_to_site($new_src, $type.$vimeo_id);
-                        set_transient("cmplz_vimeo_image_$vimeo_id", $new_src, WEEK_IN_SECONDS);
-                    }
-                }
-                break;
-            case 'dailymotion':
-                if (preg_match('/dailymotion\.com\/(embed\/video)\/([^_]+)[^#]*\?|dailymotion\.com\/(embed\/video|video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?|(dai\.ly\/([^_]+))!/i', $src, $matches)) {
-                    if (isset($matches[6])) {
-                        $daily_motion_id = $matches[6];
-                    }elseif (isset($matches[4])) {
-                        $daily_motion_id = $matches[4];
-                    }else{
-                        $daily_motion_id = $matches[2];
-                    }
-                    $new_src = get_transient("cmplz_dailymotion_image_$daily_motion_id");
-                    if (!$new_src || !file_exists($new_src)) {
-                        $thumbnail_large_url='https://api.dailymotion.com/video/'.$daily_motion_id.'?fields=thumbnail_1080_url'; //pass thumbnail_large_url, thumbnail_medium_url, thumbnail_small_url for different sizes
-                        $json_thumbnail = file_get_contents($thumbnail_large_url);
-                        $arr_dailymotion = json_decode($json_thumbnail, TRUE);
-                        $new_src = $arr_dailymotion['thumbnail_1080_url'];
-                        $new_src = cmplz_download_to_site($new_src, $type.$daily_motion_id);
-                        set_transient("cmplz_dailymotion_image_$daily_motion_id", $new_src, WEEK_IN_SECONDS);
-                    }
-                }
-                break;
-            case 'facebook':
-            case 'twitter':
-            case 'iframe':
-            case 'image':
-            case 'div':
-            default:
-                $new_src = cmplz_default_placeholder($type);
-        }
+        $new_src = apply_filters("cmplz_placeholder_$type", $new_src, $src);
 
         return apply_filters('cmplz_placeholder', $new_src, $type, $src);
     }
@@ -1158,7 +1110,7 @@ if (!function_exists('cmplz_us_cookie_statement_title')) {
         if ($california === 'yes') {
             $title = "Do Not Sell My Personal Information";
         } else {
-            $title = "Cookie Statement (US)";
+            $title = "Cookie Policy (US)";
         }
 
         return apply_filters('cmplz_us_cookie_statement_title', $title);
@@ -1263,7 +1215,7 @@ if (!function_exists('get_regions_for_consent_type')) {
     function get_regions_for_consent_type($consenttype){
         $regions = array();
         foreach (COMPLIANZ()->config->regions as $region_id => $region){
-            if ($region['type']===$consenttype) return $regions[] = $region['label'];
+            if ($region['type']===$consenttype) $regions[] = $region['label'];
         }
         return implode(', ', $regions);
     }

@@ -2,14 +2,15 @@
 defined('ABSPATH') or die("you do not have acces to this page!");
 
 
+add_action('cmplz_notice_compile_statistics', 'cmplz_show_compile_statistics_notice', 10, 1);
+function cmplz_show_compile_statistics_notice($args)
+{
+    $stats = cmplz_scan_detected_stats();
+    if ($stats) {
+        $type = reset($stats);
+        $type = COMPLIANZ()->config->stats[$type];
 
-add_action('cmplz_notice_dpo_or_gdpr', 'cmplz_dpo_or_gdpr');
-function cmplz_dpo_or_gdpr(){
-
-    if (!cmplz_company_in_eu()){
-        cmplz_notice(__("Your company is located outside the EU, so should appoint a GDPR representative in the EU.", 'complianz-gdpr'));
-    } else {
-        cmplz_notice(__("Your company is located in the EU, so you do not need to appoint a GDPR representative in the EU.", 'complianz-gdpr'));
+        cmplz_notice(sprintf(__("The cookie scan detected %s on your site, which means the answer to this question should be %s.", 'complianz-gdpr'), $type, $type));
     }
 
 }
@@ -39,6 +40,7 @@ function cmplz_uses_thirdparty_services_notice(){
         cmplz_notice(sprintf(__("The scan found third party services for %s on your site, which means the answer should be yes", 'complianz-gdpr'), $thirdparty));
     }
 }
+
 
 add_action('cmplz_notice_purpose_personaldata', 'cmplz_purpose_personaldata_notice');
 function cmplz_purpose_personaldata_notice(){
@@ -76,7 +78,7 @@ function cmplz_used_cookies_notice(){
     //not relevant if cookie blocker is disabled
     if (cmplz_get_value('disable_cookie_block')==1) return;
 
-    cmplz_notice(sprintf(__("Because your site uses third party cookies, the cookie blocker is now activated. If you experience issues on the front-end of your site due to blocked scripts, please try disabling the cookie blocker in the %ssettings%s", 'complianz-gdpr'), '<a href="'.admin_url('admin.php?page=cmplz-settings').'">','</a>'),'warning');
+    cmplz_notice(sprintf(__("Because your site uses third party cookies, the cookie blocker is now activated. If you experience issues on the front-end of your site due to blocked scripts, you can disable specific services or plugin integrations in the %sintegrations section%s, or you can disable the cookie blocker entirely on the %ssettings page%s", 'complianz-gdpr'), '<a href="'.admin_url('admin.php?page=cmplz-script-center').'">','</a>', '<a href="'.admin_url('admin.php?page=cmplz-settings').'">','</a>'),'warning');
 
 }
 
@@ -100,7 +102,7 @@ function cmplz_data_sold_us(){
 add_action('cmplz_notice_no_cookies_used', 'cmplz_notice_no_cookies_used');
 function cmplz_notice_no_cookies_used(){
 
-    if (cmplz_get_value('uses_cookies')!=='yes') {
+    if (cmplz_get_value('uses_cookies')==='no') {
         cmplz_notice(__("You have indicated your site does not use cookies. If you're sure about this, you can skip this step", 'complianz-gdpr'),'warning');
     }
 
@@ -151,6 +153,19 @@ function cmplz_show_cookie_usage_notice()
     }
 }
 
+add_action('cmplz_notice_use_categories', 'cmplz_show_use_categories_notice');
+function cmplz_show_use_categories_notice()
+{
+    $tm_fires_scripts = cmplz_get_value('fire_scripts_in_tagmanager') === 'yes' ? true : false;
+    $uses_tagmanager = cmplz_get_value('compile_statistics') === 'google-tag-manager' ? true : false;
+    if ($uses_tagmanager && $tm_fires_scripts) {
+        cmplz_notice(__('If you want to specify the categories used by Tag Manager, you need to enable categories.','complianz-gdpr'), 'warning');
+
+    } elseif (COMPLIANZ()->cookie->cookie_warning_required_stats()) {
+        cmplz_notice(__("Categories are mandatory for your statistics configuration", 'complianz-gdpr').COMPLIANZ()->config->read_more('https://complianz.io/statistics-as-mandatory-category'), 'warning');
+    }
+}
+
 
 /*
  * For the cookie page and the US banner we need a link to the privacy statement.
@@ -172,6 +187,17 @@ function cmplz_notice_missing_privacy_page(){
 add_filter('cmplz_default_value', 'cmplz_set_default', 10, 2);
 function cmplz_set_default($value, $fieldname)
 {
+
+
+
+    if ($fieldname == 'compile_statistics') {
+        $stats = cmplz_scan_detected_stats();
+        if ($stats) {
+            return reset($stats);
+        }
+    }
+
+
     if ($fieldname == 'purpose_personaldata') {
         if (cmplz_has_region('us') && COMPLIANZ()->cookie->uses_non_functional_cookies()) {
             //possibly not an array yet, when it's empty
@@ -180,6 +206,12 @@ function cmplz_set_default($value, $fieldname)
             return $value;
         }
     }
+
+//    if ($fieldname === 'use_categories') {
+//        if (COMPLIANZ()->cookie->cookie_warning_required_stats()) {
+//            return 1;
+//        }
+//    }
 
     /*
      * When cookies are detected, the user should select yes on this questino
@@ -208,7 +240,13 @@ function cmplz_set_default($value, $fieldname)
     }
 
     if ($fieldname == 'dpo_or_gdpr') {
-        if (!cmplz_company_in_eu()) return 'gdpr_rep';
+        if (!cmplz_company_located_in_region('eu')) return 'gdpr_rep';
+    }
+
+    if ($fieldname == 'dpo_or_uk_gdpr') {
+        if (!cmplz_company_located_in_region('uk')) {
+            return 'uk_gdpr_rep';
+        }
     }
 
     if ($fieldname == 'country_company') {

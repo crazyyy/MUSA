@@ -26,7 +26,7 @@ if (!class_exists("cmplz_cookie")) {
                 add_action('admin_init', array($this, 'track_cookie_changes'));
             }
 
-            if (!is_admin()) {
+            if (!is_admin() && get_option('cmplz_wizard_completed_once')) {
                 if ($this->site_needs_cookie_warning()) {
                     add_action('wp_print_footer_scripts', array($this, 'inline_cookie_script'), 9999);
                     add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'), 99999);
@@ -50,9 +50,8 @@ if (!class_exists("cmplz_cookie")) {
             add_action('deactivated_plugin', array($this, 'plugin_changes'), 10, 2);
             add_action('activated_plugin', array($this, 'plugin_changes'), 10, 2);
 
-            add_action('plugins_loaded', array($this, 'rescan'), 11, 2);
+            add_action('plugins_loaded', array($this, 'rescan'), 20, 2);
 
-            add_action('cmplz_notice_compile_statistics', array($this, 'show_compile_statistics_notice'), 10, 1);
             add_action('cmplz_notice_statistical_cookies_usage', array($this, 'show_statistical_cookies_usage_notice'), 10, 1);
             add_action('cmplz_notice_statistics_script', array($this, 'statistics_script_notice'));
 
@@ -68,6 +67,8 @@ if (!class_exists("cmplz_cookie")) {
             //add_action('wp_insert_post', array($this, 'clear_pages_list'), 10, 3);
 
             add_action('cmplz_statistics_script', array($this, 'get_statistics_script'),10);
+            add_filter('cmplz_script_class',array($this, 'add_script_classes_for_stats'), 10,3);
+
 
             $this->load();
 
@@ -84,21 +85,7 @@ if (!class_exists("cmplz_cookie")) {
             delete_transient('cmplz_pages_list');
         }
 
-        /*
-         * Show a notice regarding the statistics usage
-         *
-         *
-         * */
 
-        public function show_compile_statistics_notice($args)
-        {
-            if ($this->site_uses_cookie_of_type('google-analytics') || $this->site_uses_cookie_of_type('matomo')) {
-
-                $type = $this->site_uses_cookie_of_type('google-analytics') ? __("Google Analytics or Tag Manager", 'complianz-gdpr') : __("Matomo", 'complianz-gdpr');
-
-                    cmplz_notice(sprintf(__("The cookie scan detected %s cookies on your site, which means the answer to this question should be %s.", 'complianz-gdpr'), $type, $type));
-            }
-        }
 
         /**
          * Forces generation of a snapshot for today, triggered by the button
@@ -296,6 +283,7 @@ if (!class_exists("cmplz_cookie")) {
                 delete_transient('cmplz_detected_cookies');
                 update_option('cmplz_detected_social_media', false);
                 update_option('cmplz_detected_thirdparty_services', false);
+                update_option('cmplz_detected_stats', false);
                 $this->reset_pages_list();
 
             }
@@ -350,6 +338,11 @@ if (!class_exists("cmplz_cookie")) {
 
         public function enqueue_assets($hook)
         {
+            //enqueue if not available yet
+            if ( ! wp_script_is( 'jquery', 'enqueued' )) {
+                wp_enqueue_script( 'jquery' );
+            }
+
             $minified = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
             wp_register_style('cmplz-cookie', cmplz_url . "core/assets/css/cookieconsent$minified.css", "", cmplz_version);
             wp_enqueue_style('cmplz-cookie');
@@ -454,6 +447,24 @@ if (!class_exists("cmplz_cookie")) {
             if ($this->tagmamanager_fires_scripts() || !$this->cookie_warning_required_stats()) $classes[] = 'cmplz-native';
 
             return $classes;
+        }
+
+        /**
+         *
+         * Add script classes based on settings, so stats can be activated if no consent is required
+         * @param $class
+         * @param $match
+         * @param $found
+         * @return string
+         */
+
+
+        public function add_script_classes_for_stats($class, $match, $found){
+            if ($found === 'www.google-analytics.com/analytics.js'){
+                $class = $class." ".implode(" ",$this->get_statistics_script_classes());
+            }
+
+            return $class;
         }
 
         /**
@@ -665,6 +676,7 @@ if (!class_exists("cmplz_cookie")) {
                 update_option('cmplz_last_cookie_scan', $time);
 
                 $url = $this->get_next_page_url();
+
                 if (!$url) return;
                 //first, get the html of this page.
                 if (strpos($url, 'complianz_id') !== FALSE) {
@@ -684,6 +696,12 @@ if (!class_exists("cmplz_cookie")) {
                         $thirdparty = $this->parse_for_thirdparty_services($html);
                         $thirdparty = array_unique(array_merge($stored_thirdparty_services, $thirdparty), SORT_REGULAR);
                         update_option('cmplz_detected_thirdparty_services', $thirdparty);
+
+                        $stored_stats = cmplz_scan_detected_stats();
+                        if (!$stored_stats) $stored_stats = array();
+                        $stats = $this->parse_for_stats($html);
+                        $stats = array_unique(array_merge($stored_stats, $stats), SORT_REGULAR);
+                        update_option('cmplz_detected_stats', $stats);
                     }
                 }
 
@@ -742,6 +760,32 @@ if (!class_exists("cmplz_cookie")) {
             if ($single_key) return false;
 
             return $thirdparty;
+        }
+
+        /**
+         * Check a string for statistics
+         * @param string $html
+         * @param bool $single_key //return a single string instead of array
+         * @return array|string $thirdparty
+         *
+         * */
+
+        public function parse_for_stats($html, $single_key=false)
+        {
+
+            $stats = array();
+            $stats_markers = COMPLIANZ()->config->stats_markers;
+            foreach ($stats_markers as $key => $markers) {
+                foreach ($markers as $marker) {
+                    if (strpos($html, $marker) !== FALSE && !in_array($key, $stats)) {
+                        if ($single_key) return $key;
+                        $stats[] = $key;
+                    }
+                }
+            }
+            if ($single_key) return false;
+
+            return $stats;
         }
 
 
@@ -1562,7 +1606,6 @@ if (!class_exists("cmplz_cookie")) {
 
         public function site_needs_cookie_warning($region=false)
         {
-
             if (cmplz_get_value('uses_cookies') !== 'yes') {
                 return false;
             }
@@ -1577,7 +1620,9 @@ if (!class_exists("cmplz_cookie")) {
              *
              */
 
-            if ($region==='us'){
+            if ($region && !cmplz_has_region($region)) return false;
+
+            if ((!$region || $region==='us') && cmplz_has_region('us')){
                 return true;
             }
 
@@ -1634,17 +1679,24 @@ if (!class_exists("cmplz_cookie")) {
 
         /**
          * Check if the site needs a cookie banner considering statistics only
-         *
+         * @param $region bool|string
          * @@since 1.0
          *
          * @return bool
          * */
 
-        public function cookie_warning_required_stats()
+        public function cookie_warning_required_stats($region=false)
         {
 
-            $eu = cmplz_has_region('eu');
-            $uk = cmplz_has_region('uk');
+            if ($region){
+                $eu = false;
+                $uk = false;
+                if ($region==='uk') $uk = true;
+                if ($region==='eu') $eu = true;
+            } else {
+                $eu = cmplz_has_region('eu');
+                $uk = cmplz_has_region('uk');
+            }
 
             if (cmplz_get_value('uses_cookies') !== 'yes') {
                 return false;
@@ -1657,6 +1709,14 @@ if (!class_exists("cmplz_cookie")) {
             if (!$eu & !$uk) return false;
 
             $statistics = cmplz_get_value('compile_statistics');
+
+            //uk requires cookie warning for stats
+            if ($uk && $statistics !== 'no') return true;
+
+            //us only, no cookie warning required for stats
+            //but for us a cookie warning is required anyway
+            if (!$eu & !$uk) return false;
+
             $tagmanager = ($statistics === 'google-tag-manager') ? true : false;
             $matomo = ($statistics === 'matomo') ? true : false;
             $google_analytics = ($statistics === 'google-analytics') ? true : false;

@@ -9,10 +9,11 @@
     Hide nags from other plugins
 */
 
-.notice:not(.really-simple-plugins){
-    display:none;
+.error, .notice {
+    &:not(.really-simple-plugins) {
+        display: none !important;
+    }
 }
-
 /*
 Tabs
 */
@@ -54,11 +55,12 @@ Tabs
     margin-bottom:30px;
 }
 
-.cmplz-settings input[name="cmplz_reset_settings"]{
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
+.cmplz-settings input[name="cmplz_reset_settings"], .cmplz-reset:not(:hover){
+        color: #fff !important;
+        background-color: #dc3545 !important;
+        border-color: #dc3545 !important;
+    }
+
 
 table {
     .cmplz-cookie-variations {

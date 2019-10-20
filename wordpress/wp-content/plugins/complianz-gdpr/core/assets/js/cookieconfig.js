@@ -37,7 +37,6 @@ jQuery(document).ready(function($) {
     var ccPrivacyLink = '';
     var waitingInlineScripts = [];
     var waitingScripts = [];
-    var executedScripts = [];
     var placeholderClassIndex = 0;
     var curClass = '';
 
@@ -243,7 +242,7 @@ jQuery(document).ready(function($) {
         //scripts: set "cmplz-script classes to type="text/javascript"
         scriptElements.each(function (i, obj) {
 
-            //do not run stats scripts yet. We leave that to the dedicated stats function cmplz_enable_stats()
+            //do not run stats scripts yet. We leave that to the dedicated stats function complianz_enable_stats()
             if ($(this).hasClass('cmplz-stats')) return true;
 
             var src = $(this).attr('src');
@@ -297,14 +296,16 @@ jQuery(document).ready(function($) {
                 cmplzRunInlineScript($(this));
                 //get scripts that are waiting for this inline script
                 var waitingScript = cmplzGetWaitingScript(waitingScripts, $(this).text());
-                $.getScript( waitingScript )
-                    .done(function( s, Status ) {
-                        //maybe all scripts are already done
-                        cmplzRunAfterAllScripts();
-                    })
-                    .fail(function( jqxhr, settings, exception ) {
-                        console.warn( "Something went wrong "+exception );
-                    });
+                if (waitingScript!==false) {
+                    $.getScript(waitingScript)
+                        .done(function (s, Status) {
+                            //maybe all scripts are already done
+                            cmplzRunAfterAllScripts();
+                        })
+                        .fail(function (jqxhr, settings, exception) {
+                            console.warn("Something went wrong " + exception);
+                        });
+                }
             }
         });
 
@@ -332,7 +333,6 @@ jQuery(document).ready(function($) {
             if (waitingScripts.hasOwnProperty(waitfor)) {
                 waitingScript = waitingScripts[waitfor];
                 if (typeof waitingScript !== 'string') waitingScript = waitingScript.text();
-
                 if (src.indexOf(waitfor) !== -1) {
 
                     var output = waitingScripts[waitfor];
@@ -369,14 +369,6 @@ jQuery(document).ready(function($) {
         if (waitingInlineScripts.length===0 && waitingScripts.length===0 ) {
             //custom re-initialization after stuff is activated
             if ($('.happyforms-form').length) $('.happyforms-form').happyForm();
-
-            //Divi
-             // var map_container = $('.et_pb_map_container');
-             // if (map_container.length) {
-             //     var map = map_container.children('.et_pb_map')
-             //     console.log('init');
-             //     google.maps.event.trigger(map[0], 'resize');
-             // }
         }
     }
 
@@ -392,6 +384,10 @@ jQuery(document).ready(function($) {
             .appendTo(script.parent());
         script.remove();
     }
+
+    /**
+     * Enable statistics scripts, scripts marked with the cmplz-stats class
+     */
 
     function complianz_enable_stats() {
         console.log('fire statistics');
@@ -471,6 +467,7 @@ jQuery(document).ready(function($) {
         complianz = cmplzMergeObject(complianz, cmplz_user_data);
         cmplzIntegrationsInit();
         cmplzCheckCookiePolicyID();
+        complianz.readmore_url = complianz.readmore_url[complianz.region];
 
         $.event.trigger({
             type: "cmplzCookieBannerData",
@@ -494,6 +491,13 @@ jQuery(document).ready(function($) {
         if (!complianz.do_not_track) {
             if (complianz.consenttype === 'optin') {
                 setStatusAsBodyClass('deny');
+                //if this website also targets UK, stats are blocked by default but can be enabled in the eu before consent
+                //but only if EU does not require consent.
+                if (complianz.forceEnableStats){
+                    complianz.categories = cmplzRemoveStatisticsCategory(complianz.categories);
+                    complianz_enable_stats();
+                }
+
                 //disable auto dismiss
                 complianz.dismiss_on_scroll = false;
                 complianz.dismiss_on_timeout = false;
@@ -506,7 +510,6 @@ jQuery(document).ready(function($) {
                 setStatusAsBodyClass('allow');
                 complianz.type = 'opt-out';
                 complianz.layout = 'basic';
-                complianz.readmore_url = complianz.readmore_url_us;
                 complianz.readmore = complianz.readmore_optout;
                 complianz.dismiss = complianz.accept_informational;
                 complianz.message = complianz.message_optout;
@@ -679,9 +682,9 @@ jQuery(document).ready(function($) {
                 });
                 $('.cc-check svg').css({"stroke": complianz.popup_text_color});
 
-                cmplzFireCategories();
-
             }
+
+            cmplzFireCategories();
 
             /* We cannot run this on the initialize, as that hook runs only after a dismiss or accept choice
             *
@@ -692,6 +695,12 @@ jQuery(document).ready(function($) {
             if (complianz.consenttype === 'optout' && cmplzGetCookie('complianz_consent_status') !== 'deny') {
                 cmplzAcceptAllCookies();
             }
+
+            //fire an event so custom scripts can hook into this.
+            $.event.trigger({
+                type: "cmplzCookieWarningLoaded",
+                consentType: complianz.consenttype
+            });
         });
     }
 
@@ -705,20 +714,20 @@ jQuery(document).ready(function($) {
         cmplzSaveCategoriesSelection();
     });
 
-    /**
-    * Accept all cookies for this user.
-    *
-    * */
 
-    function cmplzAcceptAllCookies(){
-        setStatusAsBodyClass('allow');
-        cmplzSetAcceptedCookiePolicyID();
-        if (complianz.use_categories) {
-            cmplzFireCategories(true);
-        } else {
-            complianz_enable_cookies();
-            complianz_enable_scripts();
+    /**
+     * For UK, cats are always needed. If this user is EU, and does not need consent for stats, we can remove the stats category
+     * @param categories
+     * @returns {*}
+     */
+
+    function cmplzRemoveStatisticsCategory(categories){
+        if (complianz.use_categories && complianz.forceEnableStats) {
+            return categories.replace(/(.*)(<label><input type="checkbox" id="cmplz_stats".*?<\/label>.*?><\/label>)(.*)/g, function (a, b, c, d) {
+                return b + d;
+            });
         }
+        return categories;
     }
 
 
@@ -838,8 +847,8 @@ jQuery(document).ready(function($) {
      *       Accept cookies by clicking any other link cookie acceptance from a custom link
      */
 
-    $(document).on('click', '.cmplz-accept-cookies', function () {
-
+    $(document).on('click', '.cmplz-accept-cookies', function (event) {
+        event.preventDefault();
         if (complianz.use_categories) {
             //set to highest level
             cmplzSetCookie('cmplz_all', 'allow', complianz.cookie_expiry);
@@ -947,6 +956,23 @@ jQuery(document).ready(function($) {
     }
 
     /**
+     * Accept all cookies for this user.
+     *
+     * */
+
+    function cmplzAcceptAllCookies(){
+        setStatusAsBodyClass('allow');
+        cmplzSetAcceptedCookiePolicyID();
+        // if (complianz.use_categories) {
+            cmplzFireCategories(true);
+        // } else {
+        //     complianz_enable_cookies();
+        //     complianz_enable_scripts();
+        // }
+    }
+
+
+    /**
     * Fire the categories events which have been accepted.
     * Fires Tag Manager events.
     *
@@ -955,9 +981,7 @@ jQuery(document).ready(function($) {
     function cmplzFireCategories(all) {
         all = typeof all !== 'undefined' ? all : false;
         //always functional
-        if (complianz.tm_categories) {
-            cmplzRunTmEvent('cmplz_event_functional');
-        }
+        cmplzRunTmEvent('cmplz_event_functional');
 
         //using TM categories
         if (complianz.tm_categories) {
@@ -966,16 +990,13 @@ jQuery(document).ready(function($) {
                     cmplzRunTmEvent('cmplz_event_' + i);
                 }
             }
-        }
-
-        //statistics acceptance
-        if ($('#cmplz_stats').length && $('#cmplz_stats').is(":checked")) {
+        }else if (all || ($('#cmplz_stats').length && $('#cmplz_stats').is(":checked"))) {
             complianz_enable_stats();
         }
 
         //marketing cookies acceptance
         if (all || ($('#cmplz_all').length && $('#cmplz_all').is(":checked")) ) {
-            if (complianz.tm_categories) cmplzRunTmEvent('cmplz_event_all');
+            cmplzRunTmEvent('cmplz_event_all');
             complianz_enable_cookies();
             complianz_enable_scripts();
         }
@@ -983,7 +1004,7 @@ jQuery(document).ready(function($) {
 
 
 
-    /*
+    /**
     * Enable the checkbox for each category which was enabled
     *
     *
@@ -1001,7 +1022,7 @@ jQuery(document).ready(function($) {
         if (cmplzGetCookie('cmplz_stats') === 'allow') $('#cmplz_stats').prop('checked', true);
     }
 
-    /*
+    /**
     * Merge two objects
     *
     * */
@@ -1020,6 +1041,7 @@ jQuery(document).ready(function($) {
 
         return output;
     }
+
 
 
     /*

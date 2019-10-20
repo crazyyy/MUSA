@@ -91,22 +91,6 @@ jQuery(document).ready(function ($) {
         }
     );
 
-    /*
-    * show and hide support form
-    *
-    * */
-
-    $("#cmplz-support-form.hidden").hide().removeClass("hidden");
-    $(document).on('click', '#cmplz-support-link', function (e) {
-        e.preventDefault();
-
-        var form = $('#cmplz-support-form');
-        if (form.is(":visible")) {
-            form.slideUp();
-        } else {
-            form.slideDown();
-        }
-    });
 
     /*
     *
@@ -511,13 +495,21 @@ jQuery(document).ready(function ($) {
                 action: 'cmplz_report_unknown_cookies',
             }),
             success: function (response) {
-                console.log(response);
                 if (response.success) {
                     $('#cmplz-report-unknown-cookies').hide();
                     $('#cmplz-report-confirmation').show();
                 }
             }
         });
+    });
+
+    /*
+    * show shortcodes
+    *
+    * */
+
+    $(document).on('click', '.cmplz-open-shortcode', function(){
+        $(this).closest('.cmplz-success').find('.cmplz-shortcode').toggle();
     });
 
 

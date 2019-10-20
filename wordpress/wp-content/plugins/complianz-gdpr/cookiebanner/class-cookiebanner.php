@@ -330,11 +330,11 @@ if (!class_exists("cmplz_cookiebanner")) {
             /**
              * If Tag manager fires categories, enable use categories by default
              */
-            $tm_fires_scripts = cmplz_get_value('fire_scripts_in_tagmanager') === 'yes' ? true : false;
-            $uses_tagmanager = cmplz_get_value('compile_statistics') === 'google-tag-manager' ? true : false;
-            if ($uses_tagmanager && $tm_fires_scripts) {
-                $this->use_categories = true;
-            }
+//            $tm_fires_scripts = cmplz_get_value('fire_scripts_in_tagmanager') === 'yes' ? true : false;
+//            $uses_tagmanager = cmplz_get_value('compile_statistics') === 'google-tag-manager' ? true : false;
+//            if ($uses_tagmanager && $tm_fires_scripts) {
+//                $this->use_categories = true;
+//            }
 
             if (!is_array($this->statistics)) $this->statistics = array();
             $statistics = serialize($this->statistics);
@@ -682,6 +682,7 @@ if (!class_exists("cmplz_cookiebanner")) {
             $output['a_b_testing'] = cmplz_ab_testing_enabled();
             $output['do_not_track'] = apply_filters('cmplz_dnt_enabled', false);
             $output['consenttype'] = COMPLIANZ()->company->get_default_consenttype();
+            $output['region'] = COMPLIANZ()->company->get_default_region();
             $output['geoip'] = cmplz_geoip_enabled();
             $output['categories'] = '';
             $output['position'] = $this->position;
@@ -766,8 +767,10 @@ if (!class_exists("cmplz_cookiebanner")) {
             }
             $output['cookie_expiry'] = cmplz_get_value('cookie_expiry');
             $output['version'] = cmplz_version;
-            $output['readmore_url'] = cmplz_get_cookie_policy_url('eu');
-            $output['readmore_url_us'] = cmplz_get_cookie_policy_url('us');
+            $regions = cmplz_get_regions(false);
+            foreach ($regions as $region=>$label){
+                $output['readmore_url'][$region] = cmplz_get_cookie_policy_url($region);
+            }
             $privacy_link = COMPLIANZ()->document->get_page_url('privacy-statement','us');
             $output['privacy_link'] = !empty($privacy_link) ? '<span class="cc-divider">&nbsp;-&nbsp;</span><a aria-label="learn more about privacy" tabindex="0" class="cc-link" href="' . $privacy_link . '">' . $output['readmore_privacy'] . '</a>' : '';
             $output['nonce'] = wp_create_nonce('set_cookie');
