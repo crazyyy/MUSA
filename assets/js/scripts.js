@@ -1,6 +1,6 @@
 (function () {
   var method
-  var noop = function () {}
+  var noop = function () { }
   var methods = [
     "assert",
     "clear",
@@ -78,39 +78,39 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
 
 (function () {
   const ViewPort = {
-    width : Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-    init : function() {
+    width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+    init: function () {
       this.update();
-      window.onresize = function() {
+      window.onresize = function () {
         ViewPort.update()
       }
     },
-    update : function() {
+    update: function () {
       // console.log(`prev / next = ${this.width} / ${Math.max(document.documentElement.clientWidth, window.innerWidth || 0)}`)
       this.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     },
-    isSizeXS : function() {
+    isSizeXS: function () {
       return (this.width >= 320) && (this.width <= 575);
     },
-    isSizeSM : function() {
-      return  (this.width >= 576) && (this.width <= 767);
+    isSizeSM: function () {
+      return (this.width >= 576) && (this.width <= 767);
     },
-    isSizeMD : function() {
-      return  (this.width >= 768) && (this.width <= 991);
+    isSizeMD: function () {
+      return (this.width >= 768) && (this.width <= 991);
     },
-    isSizeLG : function() {
+    isSizeLG: function () {
       return (this.width >= 992) && (this.width <= 1199);
     },
-    isSizeXL : function() {
+    isSizeXL: function () {
       return (this.width >= 1200);
     },
-    isMobile : function() {
+    isMobile: function () {
       return (this.width <= 767);
     },
-    isDesktop : function() {
+    isDesktop: function () {
       return (this.width >= 992);
     },
-    is : function(taskname) {
+    is: function (taskname) {
       let statement = this[taskname]();
       if (statement) {
         console.log(`%c ${taskname} => %ctrue`, "font-size:12px; color: white", "font-size:12px; color: green");
@@ -118,7 +118,7 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
         console.log(`%c ${taskname} => %cfalse`, "font-size:12px; color: gray", "font-size:12px; color: red");
       }
     },
-    showAll : function() {
+    showAll: function () {
       ['isMobile', 'isDesktop', 'isSizeXS', 'isSizeSM', 'isSizeMD', 'isSizeLG', 'isSizeXL'].map((taskname) => {
         this.is(taskname)
       })
@@ -127,16 +127,16 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
   ViewPort.init();
 
   const Utils = {
-    SetLanguageIcoNav : function (language) {
-      if (!language.length > 0) {return false}
-      let $current_option = $('.option[data-lang="'+ language +'"]');
+    SetLanguageIcoNav: function (language) {
+      if (!language.length > 0) { return false }
+      let $current_option = $('.option[data-lang="' + language + '"]');
       let $current_ico_clone = $current_option.find('.ico').clone();
       let $current_label_clone = $current_option.find('.label').clone();
       let $selected_value_container = $('#selected-value');
       $selected_value_container.html($current_ico_clone).append($current_label_clone);
       $current_option.hide()
     },
-    ShowHideHeaderSearch : function (){
+    ShowHideHeaderSearch: function () {
       if (!ViewPort.isSizeLG()) { return } else {
         let $container_header_search = $('.header--search');
         let $header_search_form = $('.header--search form');
@@ -152,7 +152,7 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
             width: '40px'
           }, 300).show()
           $('.search-input').focus();
-          $('.search-input').focusout(function(e) {
+          $('.search-input').focusout(function (e) {
             if (!ViewPort.isSizeLG()) { return } else {
               $('.header--search form').animate({
                 width: $container_header_search.attr('data-width')
@@ -202,21 +202,21 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
       // autoplayTimeout: 30000000,
       autoplayTimeout: 10000,
       autoplayHoverPause: true,
-      responsiveClass:true,
-      responsive:{
-          0:{
-              items:1,
-              nav:false,
-              loop:true
-          },
-          768:{
-              items:3,
-              nav:false
-          },
-          992:{
-              items:4,
-              nav:false
-          }
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false,
+          loop: true
+        },
+        768: {
+          items: 3,
+          nav: false
+        },
+        992: {
+          items: 4,
+          nav: false
+        }
       }
     });
   }
@@ -233,21 +233,21 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
       autoplayTimeout: 10000,
       // autoplayTimeout: 3000,
       autoplayHoverPause: true,
-      responsiveClass:true,
-      responsive:{
-          0:{
-              items:1,
-              nav:false,
-              loop:true
-          },
-          768:{
-              items:3,
-              nav:false
-          },
-          992:{
-              items:4,
-              nav:false
-          }
+      responsiveClass: true,
+      responsive: {
+        0: {
+          items: 1,
+          nav: false,
+          loop: true
+        },
+        768: {
+          items: 3,
+          nav: false
+        },
+        992: {
+          items: 4,
+          nav: false
+        }
       }
     });
   }
@@ -274,7 +274,7 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
     })
   }
 
-  $('.searchform--tab').on('click', function (e) {
+  $('.home-slider--searchform').on('click', '.searchform--tab', function (e) {
     e.preventDefault();
     if (!$(this).hasClass('searchform--tab__active')) {
       let next_id = $(this).data('id');
@@ -283,6 +283,48 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
       $('.searchform--tab__active').removeClass('searchform--tab__active')
       $(this).addClass('searchform--tab__active')
     }
+  })
+
+  $('.searchform--content').on('click', '.btn-blue', function (e) {
+    e.preventDefault();
+    console.log('searchform--content')
+
+    // search filed
+    const $areas = $('#areas');
+    const $levels = $('#levels');
+    const $languages = $('#languages');
+    const $languages2 = $('#languages2');
+    const $types = $('#types');
+    const $regions = $('#regions');
+
+    const searchData = {
+      'action': 'ncAction',
+      'areas': $areas.val() || '',
+      'levels': $levels.val() || '',
+      'languages': $languages.val() || $languages2.val(),
+      'types': $types.val() || '',
+      'regions': $regions.val() || '',
+    }
+
+    console.log(searchData)
+    $.ajax({
+      url: adminAjax.ajaxurl,
+      data: searchData,
+      dataType: 'json',
+      // contentType: "application/json; charset=utf-8",
+      method: 'POST', //Post method
+      success: function (response) {
+        console.log(response);
+        console.log('success: ' + response.success);
+        console.log(response.data);
+
+        // const resultData = JSON.parse(response.data)
+        // console.log(resultData);
+
+      },
+      error: function (error) { console.log(error) }
+    })
+
   })
 
   $('.header--nav .headnav > li').hover(
@@ -302,9 +344,9 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
   let wpml_language = $('body').attr('data-lang')
   Utils.SetLanguageIcoNav(wpml_language);
 
-  $('#options .option').on('click', function(e){
+  $('#options .option').on('click', function (e) {
     let shwitch_to_language = e.currentTarget.dataset.lang;
-    $(document.body).css({'cursor' : 'wait'});
+    $(document.body).css({ 'cursor': 'wait' });
     Utils.SetLanguageIcoNav(shwitch_to_language)
     window.location.replace('?lang=' + shwitch_to_language);
   })
@@ -314,18 +356,18 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
   })
 
   $('.search-input').hover(
-    function(){
+    function () {
       Utils.ShowHideHeaderSearch()
-    }, function() {
+    }, function () {
       // ShowHideHeaderSearch()
     }
   )
 
-  $('.header--button__admission').on('click', function(e){
+  $('.header--button__admission').on('click', function (e) {
     ViewPort.showAll()
   })
 
-  $('.footer--widget h6').on('click', function(e){
+  $('.footer--widget h6').on('click', function (e) {
     let $footer_container = $(this).parent();
     let $footer_ul_container = $(this).next('ul');
     if ($footer_container.hasClass('footer--widget__opened')) {
@@ -337,7 +379,7 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
 
   })
 
-  $('.footer--nav__switcher').on('click', function(e){
+  $('.footer--nav__switcher').on('click', function (e) {
     let $nav_container = $(this).parent();
     let $ul_container = $(this).next('ul');
     if ($nav_container.hasClass('footer--nav--opened')) {
@@ -348,18 +390,18 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
     $nav_container.toggleClass('footer--nav--opened');
   })
 
-  $('.btn--mobswitch').on('click', function(e){
-    if (!ViewPort.isMobile()) {return false}
+  $('.btn--mobswitch').on('click', function (e) {
+    if (!ViewPort.isMobile()) { return false }
     $('header').toggleClass('menu-expanded');
   })
 
   $('.headnav > .menu-item-has-children > li').attr('data-opened', 0);
 
-  $('.headnav > .menu-item-has-children > a').on('click', function(e){
-    if (!ViewPort.isMobile()) {return false}
+  $('.headnav > .menu-item-has-children > a').on('click', function (e) {
+    if (!ViewPort.isMobile()) { return false }
     const $parent_li = $(this).parent('li');
     const openstatus = $parent_li.attr('data-opened');
-    if (openstatus == 1 ) {
+    if (openstatus == 1) {
       // e.preventDefault();
       // console.log('opened and go default event')
       // return false
