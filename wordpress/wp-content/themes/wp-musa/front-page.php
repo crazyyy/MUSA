@@ -16,7 +16,7 @@
       </div>
       <div id="programs" class="searchform--content searchform--content__active col-lg-12 col-xl-12">
         <h4><span>What do you want to study?</span></h4>
-        <form action="">
+        <form ethod="get" action="<?php echo home_url(); ?>/search-results" role="search">
           <select name="areas" id="areas">
             <option value="0" disabled selected style="display: none;">All areas of study</option>
             <?php $terms = get_terms(['taxonomy' => 'area', 'hide_empty' => true,]);
@@ -45,7 +45,7 @@
       </div>
       <div id="universities" class="searchform--content col-lg-12 col-xl-12">
         <h4><span>Where do you want to study?</span></h4>
-        <form action="">
+        <form ethod="get" action="<?php echo home_url(); ?>/search-results" role="search">
           <select name="types" id="types">
             <option value="0" disabled selected style="display: none;">All types</option>
             <?php $terms = get_terms(['taxonomy' => 'types', 'hide_empty' => true,]);

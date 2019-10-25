@@ -5,7 +5,7 @@ define('DB_PASSWORD', 'musa');
 
 define('DB_HOST', 'localhost');
 
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
 define('WPCF7_AUTOP', false);
 
 define('WP_MEMORY_LIMIT', '256M');

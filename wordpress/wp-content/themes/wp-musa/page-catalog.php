@@ -20,11 +20,11 @@
               $types = $_GET['types'];
               $language = $_GET['language'];
 
-              echo  $area;
-              echo $level;
-              echo      $region;
-              echo      $types;
-              echo      $language;
+              // echo  $area;
+              // echo $level;
+              // echo      $region;
+              // echo      $types;
+              // echo      $language;
 
               $products =  array(
                 'post_type' => 'university',
@@ -47,6 +47,11 @@
                     'taxonomy' => 'types',
                     'field' => 'term_id',
                     'terms' => $types
+                  ),
+                  array(
+                    'taxonomy' => 'region',
+                    'field' => 'term_id',
+                    'terms' => $region
                   ),
                   array(
                     'taxonomy' => 'language',
