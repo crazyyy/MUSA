@@ -5,13 +5,13 @@ Tags: GDPR, Cookie, Cookie Notice, Consent, CCPA
 Requires at least: 4.7
 License: GPL2
 Requires PHP: 5.6
-Tested up to: 5.2
-Stable tag: 3.2.2
+Tested up to: 5.3
+Stable tag: 3.2.3
 
-Configure your Cookie Notice, Cookie Consent and Cookie Policy with our Wizard and Cookie Scan. Supports GDPR, ePrivacy, CCPA, COPPA, PECR and more.
+Configure your Cookie Notice, Cookie Consent and Cookie Policy with our Wizard and Cookie Scan. Supports GDPR, ePrivacy, CCPA and PECR.
 
 == Description ==
-Complianz | GDPR Cookie Consent supports GDPR, ePrivacy, CCPA, DSVGO, AVG, RGPD, and more with a conditional Cookie Notice and customized Cookie Policy based on the results of the built-in Cookie Scan. Blocking 3rd Party Cookies from all major 3rd Party services like Google Analytics, Matomo, Adsense, Facebook, Youtube, Instagram, Vimeo and more. You can configure for US (United States) visitors, European Union (EU) visitors or UK (The United Kingdom) visitors, with Cookie Notice, Cookie Consent and Legal Documents.
+Complianz is a GDPR Cookie Consent plugin that supports GDPR, ePrivacy, CCPA and more with a conditional Cookie Notice and customized Cookie Policy based on the results of the built-in Cookie Scan.
 
 IMPORTANT! Complianz | GDPR Cookie Consent can help you meet compliance requirements, but the user must ensure that all requirements are met.
 
@@ -97,6 +97,12 @@ PECR (UK) covers the use of cookies and similar technologies for storing informa
 With some custom CSS this is possible, but we do not consider a cookie wall to be GDPR compliant, so it's not actively supported. We do, however, have the option to create a Soft Cookie Wall. Which blocks interaction with the website, but dismissing remains a possibility. 
 
 == Change log ==
+= 3.2.3 =
+* Fix: missing retain data statement in privacy policy
+* Fix: missing translation strings
+* Fix: not registering strings from cookie translation for multilanguage environments
+* Fix: changed placeholder.html in blocked iframe source to "about:blank"
+
 = 3.2.2 =
 * Improvement: added option to unlink and customize the legal documents
 * Improvement: structure improvements to integrations code

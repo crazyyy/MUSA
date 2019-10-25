@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Yoast SEO - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-10-04 17:43:33+0000\n"
+"PO-Revision-Date: 2019-10-23 20:07:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -10,6 +10,45 @@ msgstr ""
 "X-Generator: GlotPress/2.4.0-alpha\n"
 "Language: ru\n"
 "Project-Id-Version: Plugins - Yoast SEO - Stable (latest release)\n"
+
+#: admin/admin-settings-changed-listener.php:81
+msgid "Settings saved."
+msgstr "Настройки сохранены."
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:171
+msgid "Please check the format of the Youtube URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL YouTube, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:161
+msgid "Please check the format of the Wikipedia URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL Wikipedia, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:146
+msgid "Please check the format of the Pinterest URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL Pinterest, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:141
+msgid "Please check the format of the MySpace URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL MySpace, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:131
+msgid "Please check the format of the Linkedin URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL Linkedin, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:126
+msgid "Please check the format of the Instagram URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL Instagram, %s"
+
+#. translators: %s: additional message with the submitted invalid value
+#: admin/class-yoast-input-validation.php:111
+msgid "Please check the format of the Facebook Page URL you entered. %s"
+msgstr "Перепроверьте введенный формат URL страницы Facebook, %s"
 
 #: languages/yoast-components.php:71
 msgid "Dismiss this alert"
@@ -20,6 +59,10 @@ msgstr "Закрыть это предупреждение"
 #: inc/language-utils.php:81
 msgid "A company name and logo need to be set for structured data to work properly. %1$sLearn more about the importance of structured data.%2$s"
 msgstr "Для правильной работы структурированных данных необходимо указать название и логотип компании. %1$sУзнайте больше о важности структурированных данных.%2$s"
+
+#: admin/config-ui/class-configuration-structure.php:99
+msgid "Continue learning"
+msgstr "Продолжить обучение"
 
 #. translators: %s expands to an invalid Facebook App ID.
 #: inc/options/class-wpseo-option.php:427

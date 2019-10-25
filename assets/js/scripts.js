@@ -286,44 +286,44 @@ HTMLElement.prototype.pseudoStyle = function (element, prop, value) {
   })
 
   $('.searchform--content').on('click', '.btn-blue', function (e) {
-    e.preventDefault();
-    console.log('searchform--content')
+    // e.preventDefault();
+    // console.log('searchform--content')
 
-    // search filed
-    const $areas = $('#areas');
-    const $levels = $('#levels');
-    const $languages = $('#languages');
-    const $languages2 = $('#languages2');
-    const $types = $('#types');
-    const $regions = $('#regions');
+    // // search filed
+    // const $areas = $('#areas');
+    // const $levels = $('#levels');
+    // const $languages = $('#languages');
+    // const $languages2 = $('#languages2');
+    // const $types = $('#types');
+    // const $regions = $('#regions');
 
-    const searchData = {
-      'action': 'ncAction',
-      'areas': $areas.val() || '',
-      'levels': $levels.val() || '',
-      'languages': $languages.val() || $languages2.val(),
-      'types': $types.val() || '',
-      'regions': $regions.val() || '',
-    }
+    // const searchData = {
+    //   'action': 'ncAction',
+    //   'areas': $areas.val() || '',
+    //   'levels': $levels.val() || '',
+    //   'languages': $languages.val() || $languages2.val(),
+    //   'types': $types.val() || '',
+    //   'regions': $regions.val() || '',
+    // }
 
-    console.log(searchData)
-    $.ajax({
-      url: adminAjax.ajaxurl,
-      data: searchData,
-      dataType: 'json',
-      // contentType: "application/json; charset=utf-8",
-      method: 'POST', //Post method
-      success: function (response) {
-        console.log(response);
-        console.log('success: ' + response.success);
-        console.log(response.data);
+    // console.log(searchData)
+    // $.ajax({
+    //   url: adminAjax.ajaxurl,
+    //   data: searchData,
+    //   dataType: 'json',
+    //   // contentType: "application/json; charset=utf-8",
+    //   method: 'POST', //Post method
+    //   success: function (response) {
+    //     console.log(response);
+    //     console.log('success: ' + response.success);
+    //     console.log(response.data);
 
-        // const resultData = JSON.parse(response.data)
-        // console.log(resultData);
+    //     // const resultData = JSON.parse(response.data)
+    //     // console.log(resultData);
 
-      },
-      error: function (error) { console.log(error) }
-    })
+    //   },
+    //   error: function (error) { console.log(error) }
+    // })
 
   })
 
