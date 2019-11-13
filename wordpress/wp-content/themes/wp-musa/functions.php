@@ -57,11 +57,6 @@ function wpeStyles()
 add_action('init', 'wpeHeaderScripts'); // Add Scripts to wp_head
 function wpeHeaderScripts()
 {
-  wp_deregister_script('jquery');
-  wp_deregister_script('jquery-migrate');
-  wp_deregister_script('modernizr');
-  wp_deregister_script('jquery-form');
-
   wp_register_script('jquery', '//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js', array(), '3.4.1');
   wp_enqueue_script('jquery');
 
